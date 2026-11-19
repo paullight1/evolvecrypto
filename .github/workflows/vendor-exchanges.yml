@@ -1,0 +1,64 @@
+name: Vendor five exchange source repositories
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/vendor-exchanges.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vendor-exchanges
+  cancel-in-progress: false
+
+jobs:
+  vendor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 1
+          submodules: false
+      - name: Clone full working trees and replace gitlinks
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/evolvecrypto-sources
+          projects=(
+            'exclip|ColdAI-org/exclip|248f3c7f6602476c6804b20be260e6a34e861020'
+            'uswap-zero|uSwapExchange/zero|0aedb9dbe6e49ef6061176c6caf6b47e6fb43f99'
+            'mg-exchange|MG-Trading-Terminal/mg-exchange|862853d0a5c255fcb3c52a4365d08ec276bb1fdf'
+            'currency-exchange-platform|imranbru99/currency-exchange-platform-p2p|310cabb3b449e9c89d8cd6284e09950d6681d55c'
+            'cryplio|parvejhossain55/cryplio|63df4b83e50728642d2a9527270ac49cdad44346'
+          )
+          for item in "${projects[@]}"; do
+            IFS='|' read -r name upstream commit <<< "$item"
+            echo "::group::Clone $name"
+            git clone --depth 1 "https://github.com/$upstream.git" "/tmp/evolvecrypto-sources/$name"
+            git -C "/tmp/evolvecrypto-sources/$name" fetch --depth 1 origin "$commit"
+            git -C "/tmp/evolvecrypto-sources/$name" checkout --detach "$commit"
+            git rm -f -- "projects/$name"
+            mkdir -p "projects/$name"
+            rsync -a --exclude='/.git' --exclude='/.env' --exclude='/.env.local' --exclude='/.env.production' --exclude='node_modules' --exclude='.next' --exclude='vendor' --exclude='dist' --exclude='build' "/tmp/evolvecrypto-sources/$name/" "projects/$name/"
+            echo "::endgroup::"
+          done
+          git rm -f -- .gitmodules
+          git add -A -- projects
+          if git ls-files -z | xargs -0 -r -n 1 sh -c 'test "$(wc -c < "$0")" -le 95000000 || { echo "Oversized file: $0"; exit 1; }'; then
+            echo "Individual tracked file size check passed"
+          else
+            exit 1
+          fi
+          git status --short | head -100
+      - name: Commit actual source code to main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Vendor actual source trees for five exchange candidates'
+          git push origin HEAD:main

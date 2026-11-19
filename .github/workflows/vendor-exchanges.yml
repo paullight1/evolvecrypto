@@ -53,7 +53,8 @@ jobs:
           else
             exit 1
           fi
-          git status --short | head -100
+          git status --short > /tmp/vendor-status.txt
+          sed -n '1,100p' /tmp/vendor-status.txt
       - name: Commit actual source code to main
         shell: bash
         run: |

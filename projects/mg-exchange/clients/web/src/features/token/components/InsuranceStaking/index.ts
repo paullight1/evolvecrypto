@@ -1,0 +1,1 @@
+export { InsuranceStaking } from './InsuranceStaking';

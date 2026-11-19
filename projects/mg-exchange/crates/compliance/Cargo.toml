@@ -1,0 +1,31 @@
+[package]
+name = "exchange-compliance"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+exchange-common = { workspace = true }
+rust_decimal = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true }
+
+# HTTP client: required for Travel Rule (Notabene), optional for diia/sumsub
+reqwest = { version = "0.12", features = ["json", "blocking"] }
+
+# HMAC-SHA256 — used by TOTP (unconditional) and Sumsub signing (optional feature)
+hmac = { workspace = true }
+sha2 = { workspace = true }
+
+[features]
+default = []
+diia = []
+sumsub = []
+
+[dev-dependencies]
+rust_decimal_macros = "1"
+tokio = { workspace = true }

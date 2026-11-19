@@ -1,0 +1,50 @@
+.page {
+  padding: var(--pad-lg);
+  max-width: 640px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+}
+
+.statusCard { display: flex; flex-direction: column; gap: var(--pad-sm); }
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-sm);
+}
+
+.statusLabel {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  min-width: 120px;
+}
+
+.reason {
+  font-size: var(--text-sm);
+  color: var(--color-sell);
+  padding: var(--pad-sm);
+  background: rgba(var(--color-sell-rgb, 255, 70, 70), 0.08);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--color-sell);
+}
+
+.uploadPlaceholder {
+  border: 2px dashed var(--border-0);
+  border-radius: var(--radius);
+  padding: var(--pad-lg);
+  text-align: center;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+}
+
+.actions { display: flex; gap: var(--pad-sm); flex-wrap: wrap; }

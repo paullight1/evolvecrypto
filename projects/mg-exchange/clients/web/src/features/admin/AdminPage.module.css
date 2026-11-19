@@ -1,0 +1,93 @@
+.page {
+  padding: var(--pad-lg);
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+  margin-bottom: var(--pad);
+}
+
+.tabs { margin-bottom: var(--pad); }
+
+.content { display: flex; flex-direction: column; gap: var(--pad); }
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--pad-sm);
+  margin-bottom: var(--pad);
+}
+
+.sectionTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-1);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--pad-sm);
+}
+
+.healthGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--pad-sm);
+  margin-bottom: var(--pad-sm);
+}
+
+.healthItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--pad-sm);
+  background: var(--bg-2);
+  border-radius: var(--radius-sm);
+}
+
+.healthName {
+  font-size: var(--text-sm);
+  color: var(--text-1);
+}
+
+.healthLatency {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+  font-family: var(--font-data);
+}
+
+.controls {
+  display: flex;
+  gap: var(--pad-sm);
+  margin-bottom: var(--pad);
+}
+
+.treasuryTotal {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+  padding: var(--pad) 0;
+  font-family: var(--font-data);
+}
+
+.featureFlags {
+  margin-top: var(--pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xs);
+}
+
+.flagRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--pad-xs) var(--pad-sm);
+  background: var(--bg-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--text-1);
+}

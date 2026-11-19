@@ -1,0 +1,16 @@
+[package]
+name = "exchange-market-data"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+exchange-common = { workspace = true }
+rust_decimal = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }
+
+[dev-dependencies]
+rust_decimal_macros = "1"
+uuid = { workspace = true }

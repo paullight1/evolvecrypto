@@ -1,0 +1,116 @@
+{
+  "dashboard": {
+    "title": "Exchange Overview",
+    "uid": "exchange-overview",
+    "tags": ["exchange", "overview"],
+    "timezone": "utc",
+    "refresh": "10s",
+    "time": { "from": "now-1h", "to": "now" },
+    "panels": [
+      {
+        "title": "Order Throughput (orders/sec)",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+        "targets": [
+          {
+            "expr": "rate(exchange_orders_placed_total[1m])",
+            "legendFormat": "Orders/sec"
+          }
+        ]
+      },
+      {
+        "title": "Order Ack Latency (p50/p99)",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.5, rate(exchange_place_order_duration_bucket[5m]))",
+            "legendFormat": "p50"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(exchange_place_order_duration_bucket[5m]))",
+            "legendFormat": "p99"
+          }
+        ]
+      },
+      {
+        "title": "Error Rate (5xx / total)",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 6, "x": 0, "y": 8 },
+        "targets": [
+          {
+            "expr": "sum(rate(exchange_http_errors_total{status=~\"5..\"}[5m])) / sum(rate(exchange_http_requests_total[5m]))",
+            "legendFormat": "Error Rate"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "steps": [
+                { "value": 0, "color": "green" },
+                { "value": 0.001, "color": "yellow" },
+                { "value": 0.01, "color": "red" }
+              ]
+            },
+            "unit": "percentunit"
+          }
+        }
+      },
+      {
+        "title": "Rate Limit Rejections (429/sec)",
+        "type": "timeseries",
+        "gridPos": { "h": 4, "w": 6, "x": 6, "y": 8 },
+        "targets": [
+          {
+            "expr": "rate(exchange_http_errors_total{status=\"429\"}[1m])",
+            "legendFormat": "429/sec"
+          }
+        ]
+      },
+      {
+        "title": "Operating Mode",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 6, "x": 12, "y": 8 },
+        "targets": [
+          {
+            "expr": "exchange_operating_mode",
+            "legendFormat": "Mode"
+          }
+        ]
+      },
+      {
+        "title": "Active WebSocket Connections",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 6, "x": 18, "y": 8 },
+        "targets": [
+          {
+            "expr": "exchange_ws_connections_active",
+            "legendFormat": "WS Connections"
+          }
+        ]
+      },
+      {
+        "title": "Lock Wait Latency (p99 by lock)",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.99, rate(exchange_lock_wait_duration_bucket[5m]))",
+            "legendFormat": "{{lock_name}} p99"
+          }
+        ]
+      },
+      {
+        "title": "WAL Group Commit Batch Size",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 12 },
+        "targets": [
+          {
+            "expr": "exchange_wal_group_commit_batch_size",
+            "legendFormat": "Batch Size"
+          }
+        ]
+      }
+    ]
+  }
+}

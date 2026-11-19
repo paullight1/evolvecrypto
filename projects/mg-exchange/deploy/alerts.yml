@@ -1,0 +1,94 @@
+groups:
+  - name: exchange_critical
+    rules:
+      # P0-7: Background task died — supervisor should restart, but alert if it stays dead
+      - alert: BackgroundTaskDead
+        expr: (time() - exchange_task_last_heartbeat_seconds) > 120
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Background task {{ $labels.task }} has not sent a heartbeat in >2 minutes"
+          description: "Task {{ $labels.task }} last heartbeat was {{ $value | humanizeDuration }} ago. Check if supervised_spawn restarted it."
+
+      # WAL write failure — orders being accepted without crash recovery guarantee
+      - alert: WalUnhealthy
+        expr: exchange_wal_healthy == 0
+        for: 10s
+        labels:
+          severity: critical
+        annotations:
+          summary: "WAL is unhealthy — orders may not be recoverable after crash"
+          description: "The write-ahead log has failed. Orders are being accepted without durability. Immediate investigation required."
+
+      # Database connection pool exhausted
+      - alert: DbPoolExhausted
+        expr: exchange_db_connected == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Database connection lost"
+          description: "The exchange has lost its database connection. Write-behind operations are failing silently."
+
+      # Matching engine stopped producing fills while orders are being placed
+      - alert: MatchingEngineStalled
+        expr: increase(exchange_fills_total[5m]) == 0 and increase(exchange_orders_total[5m]) > 0
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Matching engine is not producing fills despite incoming orders"
+          description: "Orders are being placed but no fills are occurring. The matching engine may be hung."
+
+  - name: exchange_warning
+    rules:
+      # High memory usage — in-memory state growing
+      - alert: HighMemoryUsage
+        expr: process_resident_memory_bytes > 6e9
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Exchange process using >6GB RSS memory"
+          description: "Current: {{ $value | humanize1024 }}. In-memory state may be growing unboundedly."
+
+      # High order error rate
+      - alert: HighOrderErrorRate
+        expr: rate(exchange_order_errors_total[5m]) / rate(exchange_orders_total[5m]) > 0.1
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Order error rate >10%"
+          description: "{{ $value | humanizePercentage }} of orders are failing. Check for systemic issues."
+
+      # Funding settlement overdue (>8h 5min without settlement)
+      - alert: FundingSettlementOverdue
+        expr: (time() - exchange_task_last_heartbeat_seconds{task="funding_settler"}) > 29100
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Funding settlement has not run in >8h"
+          description: "The funding settler task last ran {{ $value | humanizeDuration }} ago. Funding payments may be missed."
+
+      # Liquidation monitor lag
+      - alert: LiquidationMonitorLag
+        expr: (time() - exchange_task_last_heartbeat_seconds{task="liquidation_monitor"}) > 30
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Liquidation monitor has not swept in >30s"
+          description: "Underwater positions may not be liquidated promptly."
+
+      # Exchange halted
+      - alert: ExchangeHalted
+        expr: exchange_is_halted == 1
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Exchange is in HALT state — no new orders accepted"
+          description: "An admin has halted the exchange. Verify this is intentional."

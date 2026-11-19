@@ -1,0 +1,40 @@
+# Build artifacts
+/target
+**/target/
+clients/web/dist/
+dist/
+build/
+storybook-static/
+
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+*storybook.log
+
+# Local environment & secrets
+.env
+.env.local
+.env.*.local
+deploy/certs/
+*.pem
+*.key
+
+# Runtime data
+/data/
+
+# OS / editor
+.DS_Store
+
+# Tooling
+.playwright-mcp/
+.vite/
+
+# Local-only Claude Code agents — business/GTM strategy, not for publication
+.claude/agents/brand-strategist.md
+.claude/agents/content-strategist.md
+.claude/agents/growth-hacker.md
+.claude/agents/influencer-analyst.md
+.claude/agents/revenue-analyst.md
+.claude/agents/tokenomics-expert.md

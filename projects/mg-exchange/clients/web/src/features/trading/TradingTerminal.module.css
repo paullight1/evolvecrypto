@@ -1,0 +1,218 @@
+.terminal {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  grid-template-rows: 40px 1fr 200px; /* ticker | main | bottom */
+  grid-template-columns: 240px 1fr 320px; /* orderbook+trades | chart | order entry */
+  gap: 1px;
+  background: var(--bg-0); /* gap color = darkest, creates 1px borders */
+}
+
+/* Full-width ticker bar */
+.ticker {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  overflow: hidden;
+}
+
+/* Left column: OrderBook + RecentTrades stacked */
+.leftColumn {
+  grid-row: 2;
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-1);
+}
+
+.leftOrderBook {
+  flex: 7;
+  overflow: hidden;
+  min-height: 0;
+  border-bottom: 1px solid var(--bg-0);
+}
+
+.leftRecentTrades {
+  flex: 3;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Chart — center cell */
+.chart {
+  grid-row: 2;
+  grid-column: 2;
+  overflow: hidden;
+  background: var(--bg-1);
+}
+
+/* Order entry — right panel */
+.orderEntry {
+  grid-row: 2;
+  grid-column: 3;
+  overflow-y: auto;
+  background: var(--bg-1);
+}
+
+/* Bottom panel — full width */
+.bottomPanel {
+  grid-row: 3;
+  grid-column: 1 / -1;
+  overflow: hidden;
+  background: var(--bg-1);
+}
+
+/* Resize handle used between columns in horizontal PanelGroup */
+.resizeHandle {
+  width: 1px;
+  background: var(--bg-0);
+  cursor: col-resize;
+  flex-shrink: 0;
+  transition: width 0.15s, background 0.15s;
+}
+
+.resizeHandle:hover,
+.resizeHandle[data-resize-handle-active] {
+  background: var(--accent);
+  width: 3px;
+}
+
+.resizeHandleHoriz {
+  height: 1px;
+  background: var(--bg-0);
+  cursor: row-resize;
+  flex-shrink: 0;
+  transition: height 0.15s, background 0.15s;
+}
+
+.resizeHandleHoriz:hover,
+.resizeHandleHoriz[data-resize-handle-active] {
+  background: var(--accent);
+  height: 3px;
+}
+
+/* ─── Tablet: 768–1200px ─────────────────────────────────────────────────── */
+/*
+ * Layout: chart stacks below a side-by-side [orderbook | order-entry] row.
+ * Grid becomes 2 columns (orderbook+trades | order entry) × 4 rows.
+ */
+@media (max-width: 1200px) {
+  .terminal {
+    grid-template-columns: 1fr 300px;
+    grid-template-rows: 40px 280px 1fr 200px;
+    /* row 1: ticker | row 2: left-col + order-entry | row 3: chart | row 4: bottom */
+  }
+
+  /* Left column: orderbook + recent trades, stacked vertically as before */
+  .leftColumn {
+    grid-row: 2;
+    grid-column: 1;
+    flex-direction: column;
+    height: auto;
+    border-right: 1px solid var(--bg-0);
+  }
+
+  .leftOrderBook {
+    border-bottom: 1px solid var(--bg-0);
+  }
+
+  /* Chart fills the wide center cell in row 3 */
+  .chart {
+    grid-row: 3;
+    grid-column: 1;
+  }
+
+  /* Order entry: narrow right column, rows 2–3 */
+  .orderEntry {
+    grid-row: 2 / 4;
+    grid-column: 2;
+    overflow-y: auto;
+  }
+
+  /* Bottom panel: full width in row 4 */
+  .bottomPanel {
+    grid-row: 4;
+    grid-column: 1 / -1;
+  }
+}
+
+/* ─── Mobile: < 768px ────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .terminal {
+    grid-template-columns: 1fr;
+    grid-template-rows: 40px 1fr 44px; /* ticker | main pane | tab switcher */
+  }
+
+  .ticker {
+    grid-column: 1;
+  }
+
+  /* All panes occupy the same row 2 cell; visibility toggled via JS classes */
+  .leftColumn,
+  .chart,
+  .orderEntry,
+  .bottomPanel {
+    grid-row: 2;
+    grid-column: 1;
+    height: 100%;
+    border: none;
+  }
+
+  /* Hidden pane state — JS adds data-mobile-hidden attribute */
+  .leftColumn[data-mobile-hidden],
+  .chart[data-mobile-hidden],
+  .orderEntry[data-mobile-hidden],
+  .bottomPanel[data-mobile-hidden] {
+    display: none;
+  }
+
+  /* Bottom panel gets its own row when visible */
+  .bottomPanel {
+    grid-row: 2;
+    grid-column: 1;
+    overflow: hidden;
+  }
+
+  /* Mobile tab bar — row 3 */
+  .mobileTabs {
+    grid-row: 3;
+    grid-column: 1;
+    display: flex;
+    align-items: stretch;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border-1);
+  }
+
+  .mobileTab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--pad-xs);
+    background: transparent;
+    border: none;
+    color: var(--text-2);
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    cursor: pointer;
+    border-top: 2px solid transparent;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .mobileTab:hover {
+    color: var(--text-0);
+  }
+
+  .mobileTabActive {
+    color: var(--text-0);
+    border-top-color: var(--accent);
+  }
+
+  /* Resize handles are meaningless on mobile */
+  .resizeHandle,
+  .resizeHandleHoriz {
+    display: none;
+  }
+}

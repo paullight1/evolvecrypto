@@ -1,0 +1,91 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  padding: var(--pad-lg);
+  gap: var(--pad-lg);
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+  margin: 0;
+}
+
+.topRow {
+  display: flex;
+  gap: var(--pad-lg);
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.statusCard {
+  min-width: 300px;
+  max-width: 400px;
+  flex: 1;
+}
+
+.statusHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--pad);
+}
+
+.statusTitle {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-1);
+}
+
+.summaryCard {
+  min-width: 240px;
+  max-width: 320px;
+  flex: 1;
+}
+
+.statsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+  margin-bottom: var(--pad);
+}
+
+.statRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.statLabel {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+}
+
+.statValue {
+  font-family: var(--font-data);
+  font-size: var(--text-sm);
+  color: var(--text-0);
+}
+
+.toggleAction {
+  margin-top: var(--pad);
+}
+
+.scenarios {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+.sectionTitle {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-1);
+  margin: 0;
+}

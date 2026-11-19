@@ -1,0 +1,156 @@
+.header {
+  height: var(--header-h);
+  background: var(--bg-1);
+  border-bottom: 1px solid var(--border-0);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--pad-lg);
+  gap: var(--pad);
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-family: var(--font-ui);
+  font-size: var(--text-md);
+  font-weight: var(--font-bold);
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin-right: var(--pad-sm);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+}
+
+.navLink {
+  background: transparent;
+  border: none;
+  padding: 5px var(--pad-sm);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+.navLink:hover {
+  color: var(--text-0);
+  background: var(--bg-3);
+}
+
+.navLinkActive {
+  color: var(--text-0);
+  background: var(--bg-3);
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-sm);
+  margin-left: auto;
+}
+
+.bellBtn {
+  position: relative;
+  background: transparent;
+  border: none;
+  color: var(--text-2);
+  cursor: pointer;
+  padding: var(--pad-xs);
+  border-radius: var(--radius-sm);
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.bellBtn:hover {
+  color: var(--text-0);
+  background: var(--bg-3);
+}
+
+.bellBadge {
+  position: absolute;
+  top: 0;
+  right: -2px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--radius-full);
+  background: var(--error);
+  color: #fff;
+  font-size: 10px;
+  font-weight: var(--font-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.emailBadge {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+  font-family: var(--font-data);
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdownTrigger {
+  /* inherits navLink styles */
+}
+
+.dropdownMenu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  min-width: 180px;
+  background: var(--bg-1);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius);
+  padding: 4px;
+  z-index: 200;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.dropdown:hover .dropdownMenu,
+.dropdown:focus-within .dropdownMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.dropdownItem {
+  background: transparent;
+  border: none;
+  padding: 7px var(--pad-sm);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.12s, background 0.12s;
+  white-space: nowrap;
+}
+
+.dropdownItem:hover {
+  color: var(--text-0);
+  background: var(--bg-3);
+}
+
+.dropdownItemActive {
+  color: var(--text-0);
+  background: var(--bg-3);
+}

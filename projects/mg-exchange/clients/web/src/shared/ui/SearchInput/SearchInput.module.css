@@ -1,0 +1,18 @@
+.clearBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: var(--text-2);
+  padding: 2px;
+  border-radius: var(--radius-xs, 2px);
+  transition: color var(--transition-fast);
+  line-height: 0;
+}
+
+.clearBtn:hover {
+  color: var(--text-0);
+}

@@ -1,0 +1,36 @@
+/* === LIGHT THEME OVERRIDES — Obsidian Volt === */
+:root.light {
+  color-scheme: light;
+
+  --bg-0: #ffffff;
+  --bg-1: #fafafa;
+  --bg-2: #f4f4f5;
+  --bg-3: #e4e4e7;
+  --bg-4: #d4d4d8;
+  --bg-hover: var(--bg-4);
+
+  --text-0: #18181b;
+  --text-1: #3f3f46;
+  --text-2: #71717a;
+  --text-3: #a1a1aa;
+
+  --border-0: rgba(0,0,0,0.04);
+  --border-1: rgba(0,0,0,0.08);
+  --border-2: rgba(0,0,0,0.12);
+
+  --accent:       #7c3aed;
+  --accent-bg:    rgba(124,58,237,0.10);
+  --accent-hover: #6d28d9;
+  --accent-bright: #8b5cf6;
+  --accent-rgb:   124, 58, 237;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+  --shadow-overlay: 0 8px 32px rgba(0,0,0,0.18);
+  --shadow-glow: 0 0 20px rgba(124,58,237,0.15);
+
+  --on-accent: #ffffff;
+  --on-short:  #ffffff;
+  --overlay: rgba(0,0,0,0.45);
+}

@@ -1,0 +1,161 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 60px 0 0 0;
+}
+
+.panel {
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  width: 360px;
+  max-height: 520px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  margin-left: 200px;
+}
+
+.search {
+  padding: var(--pad-sm);
+  border-bottom: 1px solid var(--border-1);
+}
+
+.searchInput {
+  width: 100%;
+  padding: 6px 10px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  color: var(--text-0);
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.listHeader {
+  display: grid;
+  grid-template-columns: 1fr 80px 70px 70px;
+  padding: 4px var(--pad-sm);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  color: var(--text-3);
+  border-bottom: 1px solid var(--border-0);
+}
+
+.listHeader span:nth-child(2),
+.listHeader span:nth-child(3),
+.listHeader span:nth-child(4) {
+  text-align: right;
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.sortable:hover {
+  color: var(--text-1);
+}
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.empty {
+  padding: var(--pad);
+  text-align: center;
+  color: var(--text-3);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 80px 70px 70px;
+  padding: 8px var(--pad-sm);
+  cursor: pointer;
+  transition: background 0.1s;
+  align-items: center;
+}
+
+.row:hover {
+  background: var(--bg-3);
+}
+
+.rowActive {
+  background: var(--bg-3);
+}
+
+.pairName {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  color: var(--text-0);
+}
+
+.pairBadge {
+  font-size: 9px;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.pairBadgePerp {
+  background: rgba(240, 185, 11, 0.15);
+  color: var(--accent);
+}
+
+.pairBadgeSpot {
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+.pairBadgeCoinM {
+  background: var(--purple-bg);
+  color: var(--purple);
+}
+
+.pairPrice {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-1);
+  text-align: right;
+}
+
+.pairChange {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-3);
+  text-align: right;
+}
+
+.changePos {
+  color: var(--long);
+}
+
+.changeNeg {
+  color: var(--short);
+}
+
+.pairVolume {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  text-align: right;
+}

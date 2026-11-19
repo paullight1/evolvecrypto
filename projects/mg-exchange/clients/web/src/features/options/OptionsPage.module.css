@@ -1,0 +1,56 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  padding: var(--pad-lg);
+  gap: 0;
+}
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: var(--pad);
+  flex-wrap: wrap;
+  gap: var(--pad-sm);
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+  margin: 0;
+}
+
+.controls {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--pad);
+}
+
+.tabs {
+  margin-bottom: var(--pad-lg);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.chainLayout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--pad-lg);
+  align-items: start;
+}
+
+.chainTable {
+  overflow-x: auto;
+}
+
+.orderEntry {
+  position: sticky;
+  top: 0;
+}

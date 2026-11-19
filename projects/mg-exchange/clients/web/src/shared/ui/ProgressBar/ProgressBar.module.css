@@ -1,0 +1,73 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xs);
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pad-xs);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-family: var(--font-ui);
+  color: var(--text-1);
+  line-height: 1.4;
+}
+
+.value {
+  font-size: var(--text-sm);
+  font-family: var(--font-ui);
+  color: var(--text-2);
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+/* Track */
+.track {
+  width: 100%;
+  background: var(--bg-4);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+/* Sizes */
+.sm {
+  height: 2px;
+}
+
+.md {
+  height: 4px;
+}
+
+/* Fill */
+.fill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width var(--transition-fast);
+}
+
+/* Variants */
+.accent {
+  background: var(--accent);
+}
+
+.default {
+  background: var(--accent);
+}
+
+.long {
+  background: var(--long);
+}
+
+.short {
+  background: var(--short);
+}
+
+.warning {
+  background: var(--warning);
+}

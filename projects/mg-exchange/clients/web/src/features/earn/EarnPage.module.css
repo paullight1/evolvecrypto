@@ -1,0 +1,169 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  padding: var(--pad-lg);
+  gap: 0;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+  margin: 0 0 var(--pad) 0;
+}
+
+.tabs {
+  margin-bottom: var(--pad-lg);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-lg);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--pad-lg);
+}
+
+.skeletonCard {
+  height: 200px;
+  background: var(--bg-2);
+  border-radius: var(--radius);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.sectionTitle {
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+  margin: 0;
+}
+
+.card {
+  background: var(--bg-2);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius);
+  padding: var(--pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardTitle {
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+}
+
+.cardBody {
+  display: flex;
+  gap: var(--pad);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.apy {
+  color: var(--long);
+  font-size: var(--text-base);
+}
+
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--text-3);
+  padding: var(--pad-lg);
+}
+
+.amountInput {
+  width: 90px;
+  padding: 4px 8px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  color: var(--text-0);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.amountInput:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* ── Tablet (≤1200px): 2-column product cards ── */
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Mobile (≤767px): single-column cards, full-width subscribe modal ── */
+@media (max-width: 767px) {
+  .page {
+    padding: var(--pad);
+  }
+
+  .title {
+    font-size: var(--text-base);
+    margin-bottom: var(--pad-sm);
+  }
+
+  .tabs {
+    margin-bottom: var(--pad);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--pad);
+  }
+
+  .card {
+    padding: var(--pad-sm);
+  }
+
+  .cardBody {
+    flex-wrap: wrap;
+    gap: var(--pad-sm);
+  }
+
+  .sectionTitle {
+    font-size: var(--text-sm);
+    margin-top: var(--pad-sm);
+  }
+
+  .content {
+    gap: var(--pad);
+  }
+
+  /* Subscribe modal: let the shared Modal component fill viewport width on mobile */
+  .amountInput {
+    width: 100%;
+  }
+}

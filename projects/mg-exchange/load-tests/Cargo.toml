@@ -1,0 +1,21 @@
+[package]
+name = "exchange-load-test"
+edition.workspace = true
+version.workspace = true
+
+[[bin]]
+name = "load-test"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { workspace = true }
+reqwest = { version = "0.12", features = ["json"] }
+serde = { workspace = true }
+serde_json = { workspace = true }
+rust_decimal = { workspace = true }
+rust_decimal_macros = "1"
+uuid = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+clap = { version = "=4.5.37", features = ["derive"] }

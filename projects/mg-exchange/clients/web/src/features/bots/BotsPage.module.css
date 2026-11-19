@@ -1,0 +1,124 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  padding: var(--pad-lg);
+  gap: 0;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+  margin: 0 0 var(--pad) 0;
+}
+
+.tabs {
+  margin-bottom: var(--pad-lg);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.typeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--pad-lg);
+}
+
+.typeCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.typeHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.typeLabel {
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+}
+
+.typeDesc {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+
+.typeButton {
+  display: block;
+  width: 100%;
+  padding: var(--pad-sm) var(--pad);
+  background: var(--color-accent);
+  color: var(--on-short);
+  border: none;
+  border-radius: var(--radius);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 0.15s;
+}
+
+.typeButton:hover {
+  opacity: 0.85;
+}
+
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-lg);
+}
+
+.backButton {
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+
+.backButton:hover {
+  text-decoration: underline;
+}
+
+.formTitle {
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+  margin: 0;
+}
+
+.loadingGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--pad-lg);
+}
+
+.skeletonCard {
+  height: 160px;
+  background: var(--bg-2);
+  border-radius: var(--radius);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}

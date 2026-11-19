@@ -1,0 +1,9 @@
+.card { display: flex; flex-direction: column; gap: var(--pad); }
+.header { display: flex; gap: var(--pad-sm); }
+.name { margin: 0; font-size: var(--text-base); font-weight: var(--font-semibold); color: var(--text-0); }
+.description { margin: 0; font-size: var(--text-sm); color: var(--text-1); line-height: 1.5; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: var(--pad-sm); }
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.statLabel { font-size: var(--text-xs); color: var(--text-2); }
+.statValue { font-size: var(--text-sm); font-weight: var(--font-semibold); color: var(--text-0); }
+.actions { display: flex; align-items: center; gap: var(--pad-sm); justify-content: flex-end; }

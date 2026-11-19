@@ -1,0 +1,80 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-1);
+  overflow: hidden;
+}
+
+.header {
+  padding: 6px var(--pad-sm);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-1);
+  border-bottom: 1px solid var(--border-1);
+  flex-shrink: 0;
+}
+
+.labels {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 3px var(--pad-sm);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  color: var(--text-3);
+  border-bottom: 1px solid var(--border-0);
+  flex-shrink: 0;
+}
+
+.labels span:last-child {
+  text-align: right;
+}
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.empty {
+  padding: var(--pad);
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--text-3);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 2px var(--pad-sm);
+  align-items: center;
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+}
+
+.priceBuy {
+  color: var(--long);
+}
+
+.priceSell {
+  color: var(--short);
+}
+
+.qty {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-1);
+  text-align: center;
+}
+
+.time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+  text-align: right;
+}

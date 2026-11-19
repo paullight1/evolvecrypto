@@ -1,0 +1,162 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/common",
+    "crates/matching-engine",
+    "crates/journal",
+    "crates/order-gateway",
+    "crates/account",
+    "crates/risk-engine",
+    "crates/market-data",
+    "crates/api-gateway",
+    "crates/settlement",
+    "crates/surveillance",
+    "crates/admin",
+    "crates/compliance",
+    "crates/custody",
+    "crates/db",
+    "crates/server",
+    "crates/trigger-service",
+    "crates/index-price",
+    "crates/proof-of-reserves",
+    "crates/fix-gateway",
+    "crates/copy-trading",
+    "crates/trading-bots",
+    "crates/algo-execution",
+    "crates/market-maker",
+    "crates/asset-registry",
+    "crates/defi-yield",
+    "crates/dex-aggregator",
+    "crates/web3-wallet",
+    "load-tests",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+authors = ["Dmytro Chystiakov"]
+license = "UNLICENSED"
+
+[workspace.dependencies]
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# Web framework
+axum = { version = "0.8", features = ["ws", "multipart"] }
+tower = "0.5"
+tower-http = { version = "0.6", features = ["cors", "trace", "compression-gzip", "limit"] }
+
+# Serialization
+serde = { version = "1", features = ["derive", "rc"] }
+serde_json = "1"
+
+# Database
+sqlx = { version = "0.8", features = ["runtime-tokio", "postgres", "uuid", "chrono", "rust_decimal"] }
+
+# Decimal arithmetic (NEVER use f64 for money)
+rust_decimal = { version = "1", features = ["serde-with-str"] }
+rust_decimal_macros = "1"
+
+# IDs
+uuid = { version = "1", features = ["v4", "serde"] }
+
+# Time
+chrono = { version = "0.4", features = ["serde"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json", "registry"] }
+tracing-opentelemetry = "0.27"
+opentelemetry = "0.26"
+opentelemetry_sdk = { version = "0.26", features = ["rt-tokio"] }
+opentelemetry-otlp = { version = "0.26", features = ["tonic"] }
+
+# Error handling
+anyhow = "1"
+thiserror = "2"
+
+# Async trait (object-safe async fn in traits)
+async-trait = "0.1"
+
+# Lock-free channels
+crossbeam = "0.8"
+
+# Faster Mutex/RwLock — 2-5× lower overhead for uncontended acquire vs std::sync.
+# Safe to use without poisoning because panic = "abort" in release profile
+# ensures no thread ever observes partial-panic state (Sprint S16).
+parking_lot = "0.12"
+
+# Lock-free read-heavy config maps — Sprint S17.
+# ArcSwap<Arc<HashMap<K,V>>> allows reader threads to load the current snapshot
+# with a single atomic pointer load (no mutex). Writes are admin-only (rare) and
+# rebuild the full HashMap under a brief atomic swap.
+arc-swap = "1"
+
+# Sharded concurrent hash map / set — Sprint S18.
+# DashMap<K,V> and DashSet<K> allow concurrent insertion, removal and lookup
+# through &self (no external lock). Used for frozen_accounts, kyc_approved,
+# email_verified (C.3) and the lock-free rate limiter per-user state (C.2).
+dashmap = "6"
+
+# Metrics
+metrics = "0.24"
+metrics-exporter-prometheus = "0.16"
+
+# Auth
+jsonwebtoken = "9"
+hmac = "0.12"
+sha2 = "0.10"
+aes-gcm = "0.10"
+base64 = "0.22"
+
+# Property-based testing
+proptest = "1"
+
+# Config
+config = "0.15"
+
+# HTTP client
+reqwest = { version = "0.12", features = ["rustls-tls"], default-features = false }
+
+# Hex encoding
+hex = "0.4"
+
+# Internal crates
+exchange-common = { path = "crates/common" }
+exchange-matching-engine = { path = "crates/matching-engine" }
+exchange-journal = { path = "crates/journal" }
+exchange-order-gateway = { path = "crates/order-gateway" }
+exchange-account = { path = "crates/account" }
+exchange-risk-engine = { path = "crates/risk-engine" }
+exchange-market-data = { path = "crates/market-data" }
+exchange-api-gateway = { path = "crates/api-gateway" }
+exchange-settlement = { path = "crates/settlement" }
+exchange-surveillance = { path = "crates/surveillance" }
+exchange-admin = { path = "crates/admin", features = ["email"] }
+exchange-index-price = { path = "crates/index-price" }
+exchange-trigger-service = { path = "crates/trigger-service" }
+exchange-algo-execution = { path = "crates/algo-execution" }
+exchange-market-maker = { path = "crates/market-maker" }
+exchange-compliance = { path = "crates/compliance" }
+exchange-custody = { path = "crates/custody" }
+exchange-proof-of-reserves = { path = "crates/proof-of-reserves" }
+exchange-copy-trading = { path = "crates/copy-trading" }
+exchange-trading-bots = { path = "crates/trading-bots" }
+exchange-asset-registry = { path = "crates/asset-registry" }
+exchange-fix-gateway = { path = "crates/fix-gateway" }
+exchange-defi-yield = { path = "crates/defi-yield" }
+exchange-dex-aggregator = { path = "crates/dex-aggregator" }
+exchange-web3-wallet = { path = "crates/web3-wallet" }
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+# panic = "abort" is REQUIRED for parking_lot::Mutex safety (Sprint S16):
+# parking_lot Mutexes don't poison on panic, so a panicked thread holding a
+# lock could leave corrupt shared state visible to other threads. Aborting
+# on panic terminates the process before any other thread can observe the
+# inconsistency. Process supervisor restarts with a fresh state.
+# See Sprint S16 in docs/TASK_TRACKER.md for context.
+panic = "abort"
+strip = "symbols"

@@ -1,0 +1,12 @@
+.wrap { display: flex; flex-direction: column; gap: var(--pad-lg); }
+.poolStats { display: flex; flex-direction: column; gap: var(--pad); }
+.poolTitle { margin: 0; font-size: var(--text-base); font-weight: var(--font-semibold); color: var(--text-0); }
+.statsGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--pad); }
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.statLabel { font-size: var(--text-xs); color: var(--text-2); }
+.statValue { font-size: var(--text-base); font-weight: var(--font-semibold); color: var(--text-0); }
+.lockNote { margin: 0; font-size: var(--text-sm); color: var(--text-2); }
+.forms { display: grid; grid-template-columns: 1fr 1fr; gap: var(--pad-lg); }
+.form { display: flex; flex-direction: column; gap: var(--pad); }
+.formTitle { margin: 0; font-size: var(--text-sm); font-weight: var(--font-semibold); color: var(--text-0); }
+@media (max-width: 600px) { .forms { grid-template-columns: 1fr; } }

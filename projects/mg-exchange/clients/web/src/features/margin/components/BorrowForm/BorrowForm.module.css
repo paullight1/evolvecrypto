@@ -1,0 +1,49 @@
+.card {
+  max-width: 360px;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-1);
+  margin: 0 0 var(--pad-sm) 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+.rateInfo {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px var(--pad-sm);
+  background: var(--bg-2);
+  border-radius: var(--radius-sm);
+  padding: var(--pad-sm);
+}
+
+.rateLabel {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+}
+
+.rateValue {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  color: var(--text-0);
+  text-align: right;
+}
+
+.assetSuffix {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+}
+
+.error {
+  font-size: var(--text-xs);
+  color: var(--sell);
+  margin: 0;
+}

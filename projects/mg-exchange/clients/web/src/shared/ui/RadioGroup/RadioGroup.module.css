@@ -1,0 +1,183 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xs);
+}
+
+.groupLabel {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-1);
+}
+
+/* ── Layout containers ─────────────────────────────────────── */
+
+.group {
+  display: flex;
+}
+
+.horizontal {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--pad);
+}
+
+.vertical {
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+/* ── Default variant: radio circles ────────────────────────── */
+
+.optionLabel {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--pad-sm);
+  cursor: pointer;
+  user-select: none;
+}
+
+.optionDisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.radioControl {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: 2px; /* optical alignment with label text */
+}
+
+/* Hidden native input */
+.radioInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Custom outer circle */
+.radioCircle {
+  width: 16px;
+  height: 16px;
+  border: var(--border-2);
+  border-radius: 50%;
+  background: var(--bg-3);
+  position: relative;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+/* Focus ring */
+.radioInput:focus-visible + .radioCircle {
+  box-shadow: 0 0 0 2px var(--accent-bg);
+}
+
+/* Inner dot when selected */
+.radioCircle.radioSelected {
+  border-color: var(--accent);
+}
+
+.radioCircle.radioSelected::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.optionTextGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.optionText {
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  color: var(--text-0);
+  line-height: 1.4;
+}
+
+.optionDescription {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+/* ── Button variant: segmented control ─────────────────────── */
+
+.buttonGroup {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.buttonGroup .buttonOption + .buttonOption {
+  border-left: 1px solid var(--border-1);
+}
+
+.buttonOption {
+  flex: 1;
+  background: var(--bg-3);
+  border: none;
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.buttonOption:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.buttonOption:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+.buttonSelected {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+/* Button sizes */
+.buttonOption.sm {
+  padding: 4px 10px;
+  font-size: var(--text-xs);
+  height: 28px;
+}
+
+.buttonOption.md {
+  padding: 6px 14px;
+  font-size: var(--text-sm);
+  height: 36px;
+}
+
+/* ── Error ─────────────────────────────────────────────────── */
+
+.error {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--short);
+}

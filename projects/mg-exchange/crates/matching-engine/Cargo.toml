@@ -1,0 +1,48 @@
+[package]
+name = "exchange-matching-engine"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+exchange-common = { workspace = true }
+serde = { workspace = true }
+rust_decimal = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+crossbeam = { workspace = true }
+thiserror = { workspace = true }
+rustc-hash = "2"
+# HdrHistogram by Gil Tene — standard for latency measurement in production
+# trading/messaging systems (used by Aeron, Chronicle, Kafka). Pinned to 7.x
+# (stable API). Required for p99.99 tail latency tracking in engine_thread.
+hdrhistogram = "7"
+# SmallVec: stack-allocated up to N elements, spills to heap beyond that.
+# The hot path emits 1–3 events per call (accepted, fill(s), cancelled); all
+# fit in the inline buffer with zero heap allocation. Spill happens only on
+# deep sweeps (>4 events) which already dominate their own cost.
+# Version pinned to the transitive dependency version already in Cargo.lock.
+smallvec = "1"
+core_affinity = "0.8"
+
+[dev-dependencies]
+proptest = { workspace = true }
+serde_json = { workspace = true }
+rust_decimal_macros = "1"
+criterion = { version = "0.5", features = ["html_reports"] }
+
+[[bench]]
+name = "throughput"
+harness = false
+
+[[bench]]
+name = "market_maker"
+harness = false
+
+[[bench]]
+name = "deep_book"
+harness = false
+
+[[bench]]
+name = "call_auction"
+harness = false

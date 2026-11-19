@@ -1,0 +1,22 @@
+.countdown {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--pad-xs);
+  font-family: var(--font-data);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-0);
+  font-size: var(--text-sm);
+}
+
+.prefix {
+  color: var(--text-2);
+  font-family: var(--font-ui);
+}
+
+.time {
+  color: inherit;
+}
+
+.completed {
+  color: var(--text-2);
+}

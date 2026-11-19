@@ -1,0 +1,79 @@
+{
+  "dashboard": {
+    "title": "Matching Engine Metrics",
+    "uid": "engine-metrics",
+    "tags": ["exchange", "engine", "latency"],
+    "timezone": "utc",
+    "refresh": "10s",
+    "time": { "from": "now-30m", "to": "now" },
+    "panels": [
+      {
+        "title": "Per-Symbol Matching Latency p99 (µs)",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 24, "x": 0, "y": 0 },
+        "targets": [
+          {
+            "expr": "exchange_engine_latency_p99_ns / 1000",
+            "legendFormat": "{{symbol}} p99 µs"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "µs",
+            "thresholds": {
+              "steps": [
+                { "value": 0, "color": "green" },
+                { "value": 100, "color": "yellow" },
+                { "value": 1000, "color": "red" }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "title": "Engine Queue Depth",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+        "targets": [
+          {
+            "expr": "exchange_engine_queue_depth",
+            "legendFormat": "{{symbol}}"
+          }
+        ]
+      },
+      {
+        "title": "Order Book Depth (price levels)",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+        "targets": [
+          {
+            "expr": "exchange_orderbook_levels",
+            "legendFormat": "{{symbol}} {{side}}"
+          }
+        ]
+      },
+      {
+        "title": "Orders Placed per Symbol (1m rate)",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 16 },
+        "targets": [
+          {
+            "expr": "rate(exchange_orders_placed_by_symbol_total[1m])",
+            "legendFormat": "{{symbol}}"
+          }
+        ]
+      },
+      {
+        "title": "Fills per Symbol (1m rate)",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 16 },
+        "targets": [
+          {
+            "expr": "rate(exchange_fills_by_symbol_total[1m])",
+            "legendFormat": "{{symbol}}"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+[package]
+name = "exchange-account"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+exchange-common = { workspace = true }
+rust_decimal = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+serde = { workspace = true }
+sha2 = { workspace = true }
+parking_lot = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
+rust_decimal_macros = "1"

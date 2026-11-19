@@ -1,0 +1,11 @@
+.tree { display: flex; flex-direction: column; gap: 2px; }
+.nodeWrap { display: flex; flex-direction: column; }
+.node { display: flex; align-items: center; gap: var(--pad-sm); padding: var(--pad-sm); border-radius: var(--radius-sm); background: var(--bg-1); }
+.toggle { background: none; border: none; cursor: pointer; color: var(--text-2); font-size: var(--text-sm); width: 16px; padding: 0; }
+.toggle:disabled { cursor: default; }
+.nickname { font-size: var(--text-sm); font-weight: var(--font-semibold); color: var(--text-0); }
+.meta { font-size: var(--text-xs); color: var(--text-2); flex: 1; }
+.commission { font-size: var(--text-sm); color: var(--accent); font-weight: var(--font-semibold); }
+.children { display: flex; flex-direction: column; gap: 2px; margin-top: 2px; }
+.loading { color: var(--text-2); font-size: var(--text-sm); }
+.empty { color: var(--text-2); font-size: var(--text-sm); text-align: center; padding: var(--pad-lg); }

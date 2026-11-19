@@ -1,0 +1,34 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  padding: var(--pad-lg);
+  gap: 0;
+}
+
+.topSection {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--pad);
+  gap: var(--pad-lg);
+  flex-wrap: wrap;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+  margin: 0;
+}
+
+.tabs {
+  margin-bottom: var(--pad-lg);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+}

@@ -1,0 +1,100 @@
+{{template "head" .}}
+<div class="page-content page-content--wide">
+
+  <a href="/" class="back-link">&larr; Back to Swap</a>
+
+  <div class="article-header">
+    <h1>Frequently Asked Questions</h1>
+    <p>Everything you need to know about using uSwap Zero.</p>
+  </div>
+
+  <div class="faq-list">
+    <details class="faq-item" open>
+      <summary class="faq-question">What is uSwap Zero?</summary>
+      <div class="faq-answer">
+        <p>uSwap Zero is a no-app-fee, zero-tracking, open-source crypto swap frontend. It lets you swap 140+ cryptocurrencies across 29+ blockchains with no uSwap app fee and no JavaScript tracking. Powered by the <a href="https://defuse.org/">NEAR Intents</a> protocol.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">Is KYC required?</summary>
+      <div class="faq-answer">
+        <p>No. uSwap Zero requires no KYC, no identity verification, no account, and no sign-up. There is nothing to register, no email to provide, and no documents to upload. Just pick your tokens, enter your wallet addresses, and swap. See our <a href="/privacy">privacy policy</a> for full details on what we do (and don't) collect.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">Are there really no fees?</summary>
+      <div class="faq-answer">
+        <p>uSwap Zero does not add an app fee or commission. You may still pay the market maker spread and any protocol or network costs surfaced by NEAR Intents. See our <a href="/fees">fee transparency page</a> for details.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">Which cryptocurrencies are supported?</summary>
+      <div class="faq-answer">
+        <p>Over 140 tokens across 29+ blockchains including Bitcoin, Ethereum, Solana, NEAR, Polygon, Arbitrum, Optimism, Avalanche, BNB Chain, and more. See the <a href="/currencies">full list of supported currencies</a>.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">How long does a swap take?</summary>
+      <div class="faq-answer">
+        <p>Swap times depend on the blockchains involved. Most swaps complete in 1&ndash;30 minutes:</p>
+        <ul>
+          <li><strong>Fast</strong> (~1 min): Solana, NEAR, XRP, Stellar</li>
+          <li><strong>Medium</strong> (2&ndash;5 min): Ethereum, Arbitrum, Optimism, Avalanche, BNB Chain</li>
+          <li><strong>Slower</strong> (10&ndash;30 min): Bitcoin, Litecoin, Dogecoin</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">Is uSwap Zero safe?</summary>
+      <div class="faq-answer">
+        <p>uSwap Zero is non-custodial &mdash; your funds go directly through the NEAR Intents protocol, not through us. The entire source code is <a href="/source">public on GitHub</a> under the MIT License, the build is verifiable at <a href="/verify">/verify</a>, and there is zero JavaScript tracking. You can audit everything yourself.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">What happens if something goes wrong?</summary>
+      <div class="faq-answer">
+        <p>If a swap cannot be completed, your funds are automatically refunded to the refund address you provided. The NEAR Intents protocol handles this &mdash; no manual intervention is needed. If your swap status shows an issue, check back on your order page as refunds are processed automatically.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">Why is there no JavaScript tracking?</summary>
+      <div class="faq-answer">
+        <p>Privacy. uSwap Zero uses zero analytics, zero cookies, makes zero external browser requests for the swap flow, and does not need application JavaScript.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">Is uSwap Zero open source?</summary>
+      <div class="faq-answer">
+        <p>Yes. The complete source code is <a href="/source">available on GitHub</a> under the MIT License. It is a single Go binary with zero external dependencies &mdash; only the Go standard library. You can verify the deployed binary matches the source code at <a href="/verify">/verify</a>.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">Do you collect any personal data?</summary>
+      <div class="faq-answer">
+        <p>No. uSwap Zero collects zero personal data. No analytics, no cookies, no IP logging, no wallet address tracking. Your swap details are encrypted in your order URL and never stored on our servers. When the order expires, the data is gone.</p>
+      </div>
+    </details>
+
+    <details class="faq-item">
+      <summary class="faq-question">What is the market maker spread?</summary>
+      <div class="faq-answer">
+        <p>The spread is the difference between what a market maker pays for a token and what they sell it for. It typically ranges from 0.1% to 0.5% depending on the pair and liquidity. uSwap Zero does not add its own app fee on top of this spread.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="text-center mt-32 mb-24">
+    <a href="/" class="btn btn--primary">Start a Swap &rarr;</a>
+  </div>
+
+</div>
+{{template "footer" .}}

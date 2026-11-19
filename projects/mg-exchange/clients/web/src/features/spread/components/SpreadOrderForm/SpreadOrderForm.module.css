@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+  max-width: 400px;
+}
+
+.placeholder {
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  padding: var(--pad);
+}
+
+.instrumentInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoLabel {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.infoValue {
+  font-size: var(--text-sm);
+  color: var(--text-0);
+  font-family: var(--font-data);
+}

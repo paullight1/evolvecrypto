@@ -1,0 +1,72 @@
+/* Horizontal rule */
+.horizontal {
+  border: none;
+  border-top: 1px solid var(--border-1);
+  width: 100%;
+}
+
+/* Horizontal with label */
+.withLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-sm);
+  width: 100%;
+}
+
+.line {
+  flex: 1;
+  border-top: 1px solid var(--border-1);
+  display: block;
+}
+
+.labelText {
+  color: var(--text-3);
+  font-size: var(--text-xs);
+  font-family: var(--font-ui);
+  white-space: nowrap;
+  padding: 0 var(--pad-sm);
+  flex-shrink: 0;
+}
+
+/* Vertical */
+.vertical {
+  display: inline-block;
+  border-left: 1px solid var(--border-1);
+  align-self: stretch;
+  height: auto;
+}
+
+/* Spacing — horizontal (margin top/bottom) */
+.horizontal.spacing-sm,
+.withLabel.spacing-sm {
+  margin-top: var(--pad-sm);
+  margin-bottom: var(--pad-sm);
+}
+
+.horizontal.spacing-md,
+.withLabel.spacing-md {
+  margin-top: var(--pad);
+  margin-bottom: var(--pad);
+}
+
+.horizontal.spacing-lg,
+.withLabel.spacing-lg {
+  margin-top: var(--pad-lg);
+  margin-bottom: var(--pad-lg);
+}
+
+/* Spacing — vertical (margin left/right) */
+.vertical.spacing-sm {
+  margin-left: var(--pad-sm);
+  margin-right: var(--pad-sm);
+}
+
+.vertical.spacing-md {
+  margin-left: var(--pad);
+  margin-right: var(--pad);
+}
+
+.vertical.spacing-lg {
+  margin-left: var(--pad-lg);
+  margin-right: var(--pad-lg);
+}

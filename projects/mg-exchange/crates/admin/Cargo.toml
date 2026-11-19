@@ -1,0 +1,26 @@
+[package]
+name = "exchange-admin"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+exchange-common = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+rust_decimal = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }
+sha2 = { workspace = true }
+async-trait = { workspace = true }
+lettre = { version = "0.11", features = ["tokio1-native-tls", "builder"], optional = true }
+tokio = { workspace = true, optional = true }
+
+[features]
+default = []
+email = ["lettre", "tokio"]
+
+[dev-dependencies]
+rust_decimal_macros = "1"
+tokio = { workspace = true }

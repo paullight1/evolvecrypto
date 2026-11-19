@@ -1,0 +1,337 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-1);
+  overflow: hidden;
+}
+
+.tabsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-1);
+  padding-right: var(--pad-sm);
+  flex-shrink: 0;
+}
+
+.cancelAllBtn {
+  padding: 3px 10px;
+  background: var(--short-bg);
+  border: 1px solid var(--short-muted);
+  border-radius: var(--radius-sm);
+  color: var(--short);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.cancelAllBtn:hover:not(:disabled) {
+  background: var(--short-muted);
+}
+
+.cancelAllBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.loading {
+  padding: var(--pad);
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--text-3);
+}
+
+.empty {
+  padding: var(--pad);
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--text-3);
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+}
+
+.table thead th {
+  padding: 6px var(--pad-sm);
+  text-align: left;
+  color: var(--text-2);
+  font-weight: var(--font-medium);
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border-1);
+  position: sticky;
+  top: 0;
+  background: var(--bg-2);
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border-0);
+  transition: background 0.1s;
+}
+
+.table tbody tr:hover {
+  background: var(--bg-2);
+}
+
+.table tbody td {
+  padding: 5px var(--pad-sm);
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  color: var(--text-3);
+}
+
+.long {
+  color: var(--long);
+  font-weight: var(--font-medium);
+}
+
+.short {
+  color: var(--short);
+  font-weight: var(--font-medium);
+}
+
+.timeCell {
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+.actionBtn {
+  padding: 2px 8px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  color: var(--text-1);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.actionBtn:hover:not(:disabled) {
+  border-color: var(--short);
+  color: var(--short);
+}
+
+.actionBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.closeBtns {
+  display: flex;
+  gap: 2px;
+}
+
+.closeBtn {
+  padding: 2px 5px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.closeBtn:hover:not(:disabled) {
+  border-color: var(--short);
+  color: var(--short);
+}
+
+.closeBtnFull {
+  color: var(--text-0);
+  font-weight: var(--font-medium);
+}
+
+.closeBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-sm);
+  padding: 4px var(--pad-sm);
+  border-bottom: 1px solid var(--border-0);
+}
+
+.filterInput {
+  flex: 1;
+  padding: 3px 8px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  color: var(--text-0);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  max-width: 180px;
+}
+
+.filterInput:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.filterCount {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  color: var(--text-3);
+}
+
+.loadMoreBtn {
+  display: block;
+  width: 100%;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--border-0);
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.loadMoreBtn:hover:not(:disabled) {
+  background: var(--bg-3);
+}
+
+.loadMoreBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.inlineDialog {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-sm);
+  padding: var(--pad-sm) var(--pad);
+  background: var(--bg-3);
+  border-top: 1px solid var(--border-1);
+  font-size: 11px;
+  color: var(--text-1);
+}
+
+.editable {
+  cursor: pointer;
+  border-bottom: 1px dashed var(--border-2);
+}
+
+.editable:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.editInput {
+  width: 70px;
+  padding: 1px 4px;
+  background: var(--bg-3);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  color: var(--text-0);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  outline: none;
+}
+
+.statusBadge {
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: var(--font-medium);
+}
+
+.status-open {
+  background: rgba(240, 185, 11, 0.15);
+  color: var(--accent);
+}
+
+.status-filled {
+  background: var(--long-bg);
+  color: var(--long);
+}
+
+.status-cancelled {
+  background: var(--bg-3);
+  color: var(--text-3);
+}
+
+.status-partial {
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+/* ─── Tablet: 768–1200px ─────────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  /* Tab bar: allow horizontal scroll if tabs overflow */
+  .tabsRow {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    padding-right: 0; /* cancel right pad so Cancel All doesn't clip */
+  }
+
+  .tabsRow::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Cancel All button stays accessible — pushed to a sticky right edge */
+  .cancelAllBtn {
+    position: sticky;
+    right: var(--pad-sm);
+    flex-shrink: 0;
+    margin-left: var(--pad-sm);
+  }
+}
+
+/* ─── Mobile: < 768px ────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  /* Slightly taller touch targets on the tab bar */
+  .tabsRow {
+    min-height: 38px;
+  }
+
+  /* Tighten cell padding so more columns are visible */
+  .table thead th,
+  .table tbody td {
+    padding-left: var(--pad-xs);
+    padding-right: var(--pad-xs);
+  }
+
+  /* Hide lower-priority columns on mobile via utility class applied by JS */
+  .colHideMobile {
+    display: none;
+  }
+
+  /* Inline edit inputs full-width */
+  .filterInput {
+    max-width: 100%;
+  }
+}

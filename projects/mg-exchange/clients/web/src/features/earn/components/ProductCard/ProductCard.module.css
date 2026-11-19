@@ -1,0 +1,59 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.asset {
+  font-family: var(--font-ui);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+}
+
+.apy {
+  display: flex;
+  align-items: baseline;
+  gap: var(--pad-xs);
+}
+
+.apyValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl, 1.5rem);
+  font-weight: var(--font-bold);
+  color: var(--color-long);
+}
+
+.apyLabel {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xs);
+}
+
+.detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.detailLabel {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.detailValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-1);
+}

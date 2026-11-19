@@ -1,0 +1,64 @@
+.page {
+  padding: var(--pad-lg);
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+  margin-bottom: var(--pad);
+}
+
+.tabs {
+  margin-bottom: var(--pad);
+}
+
+.tableWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+.tableToolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--pad);
+  flex-wrap: wrap;
+}
+
+.sortButtons {
+  display: flex;
+  gap: 4px;
+}
+
+.sortBtn {
+  background: var(--bg-2);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: var(--text-xs);
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.sortBtn:hover {
+  color: var(--text-0);
+  background: var(--bg-3);
+}
+
+.sortBtnActive {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--pad);
+  margin-bottom: var(--pad);
+}

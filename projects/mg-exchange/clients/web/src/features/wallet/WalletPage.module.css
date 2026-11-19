@@ -1,0 +1,64 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  padding: var(--pad-lg);
+  gap: 0;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+  margin: 0 0 var(--pad) 0;
+}
+
+.tabs {
+  margin-bottom: var(--pad-lg);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ── Tablet (≤1200px): deposit/withdraw form sections side by side ── */
+@media (max-width: 1200px) {
+  .content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--pad-lg);
+    align-items: start;
+  }
+
+  /* Single-child tabs (overview/history) should span full width */
+  .content > *:only-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── Mobile (≤767px): full-width forms, scrollable balance table ── */
+@media (max-width: 767px) {
+  .page {
+    padding: var(--pad);
+  }
+
+  .content {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .title {
+    font-size: var(--text-base);
+    margin-bottom: var(--pad-sm);
+  }
+
+  .tabs {
+    margin-bottom: var(--pad);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

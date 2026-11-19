@@ -1,0 +1,37 @@
+# Build artifacts
+target/
+load-tests/target/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Claude
+.claude/
+
+# Frontend (built separately)
+clients/
+node_modules/
+
+# Documentation
+docs/
+*.md
+!migrations/*.sql
+
+# Deploy configs (not needed in build context)
+deploy/
+monitoring/
+
+# Misc
+.env
+.env.*
+*.tar.gz
+docker-compose*.yml
+Dockerfile
+.dockerignore

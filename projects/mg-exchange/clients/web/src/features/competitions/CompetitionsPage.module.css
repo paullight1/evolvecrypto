@@ -1,0 +1,7 @@
+.page { display: flex; flex-direction: column; height: 100%; overflow: hidden; padding: var(--pad-lg); gap: 0; }
+.title { font-family: var(--font-ui); font-size: var(--text-lg); font-weight: var(--font-semibold); color: var(--text-0); margin: 0 0 var(--pad) 0; }
+.tabs { margin-bottom: var(--pad-lg); }
+.content { flex: 1; overflow-y: auto; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--pad-lg); }
+.skeletonCard { height: 220px; background: var(--bg-2); border-radius: var(--radius); animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }

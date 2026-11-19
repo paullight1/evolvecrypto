@@ -1,0 +1,149 @@
+# Exchange SLO burn-rate alerting rules.
+#
+# Based on the multi-window multi-burn-rate method from Google SRE Workbook.
+# SLO targets from docs/slo.md.
+#
+# Fast burn (2% of 30-day budget in 1h) → page on-call immediately.
+# Slow burn (10% of 30-day budget in 6h) → ticket for next-business-day triage.
+
+groups:
+  - name: exchange_slo_burn_rate
+    interval: 30s
+    rules:
+      # ────────────────────────────────────────────────────────────────
+      # SLI 1: Order acknowledgement latency p99 ≤ 10ms
+      # Error budget: 0.1% of orders may exceed 10ms in 30 days.
+      # ────────────────────────────────────────────────────────────────
+
+      # Recording rule: fraction of orders exceeding 10ms.
+      - record: exchange:order_ack_error_ratio
+        expr: |
+          (
+            sum(rate(exchange_place_order_duration_bucket{le="0.01"}[5m]))
+            /
+            sum(rate(exchange_place_order_duration_count[5m]))
+          )
+
+      # Fast burn: 2% of monthly budget in 1 hour.
+      # 0.1% budget over 30 days = 43.2 min/month.
+      # 2% of that = 0.864 min consumed in 1h → error rate > 14.4× budget rate.
+      - alert: OrderAckLatencySLO_FastBurn
+        expr: |
+          (
+            1 - sum(rate(exchange_place_order_duration_bucket{le="0.01"}[1h]))
+                / sum(rate(exchange_place_order_duration_count[1h]))
+          ) > 0.0144
+        for: 2m
+        labels:
+          severity: page
+          slo: order_ack_latency
+        annotations:
+          summary: "Order ack p99 SLO fast burn — paging on-call"
+          description: "More than 1.44% of orders exceeded 10ms p99 in the last hour (2% of 30-day budget consumed in 1h)."
+          runbook: "docs/runbooks/high-latency.md"
+
+      # Slow burn: 10% of monthly budget in 6 hours.
+      - alert: OrderAckLatencySLO_SlowBurn
+        expr: |
+          (
+            1 - sum(rate(exchange_place_order_duration_bucket{le="0.01"}[6h]))
+                / sum(rate(exchange_place_order_duration_count[6h]))
+          ) > 0.0036
+        for: 10m
+        labels:
+          severity: ticket
+          slo: order_ack_latency
+        annotations:
+          summary: "Order ack p99 SLO slow burn — ticket for triage"
+          description: "More than 0.36% of orders exceeded 10ms in the last 6h (10% of 30-day budget consumed in 6h)."
+          runbook: "docs/runbooks/high-latency.md"
+
+      # ────────────────────────────────────────────────────────────────
+      # SLI 3: Matching engine availability ≥ 99.9% per symbol
+      # ────────────────────────────────────────────────────────────────
+
+      - alert: MatchingEngineDown_FastBurn
+        expr: |
+          (1 - avg_over_time(exchange_engine_available[1h])) > 0.014
+        for: 2m
+        labels:
+          severity: page
+          slo: engine_availability
+        annotations:
+          summary: "Matching engine availability SLO fast burn"
+          description: "Engine downtime exceeds 2% of monthly budget in the last hour."
+          runbook: "docs/runbooks/matching-engine-halt.md"
+
+      # ────────────────────────────────────────────────────────────────
+      # SLI 5: Withdrawal success rate ≥ 99.5%
+      # ────────────────────────────────────────────────────────────────
+
+      - alert: WithdrawalSuccessRate_FastBurn
+        expr: |
+          (
+            1 - sum(rate(exchange_withdrawals_completed_total[1h]))
+                / sum(rate(exchange_withdrawals_requested_total[1h]))
+          ) > 0.07
+        for: 5m
+        labels:
+          severity: page
+          slo: withdrawal_success
+        annotations:
+          summary: "Withdrawal success rate SLO fast burn — paging"
+          description: "More than 7% of withdrawals failed in the last hour."
+          runbook: "docs/runbooks/suspected-hack.md"
+
+  # ──────────────────────────────────────────────────────────────────
+  # Symptom-based operational alerts (not SLO-driven)
+  # ──────────────────────────────────────────────────────────────────
+  - name: exchange_operational
+    interval: 30s
+    rules:
+
+      - alert: TaskHeartbeatStale
+        expr: |
+          (time() - exchange_task_heartbeat_last_timestamp) > 120
+        for: 1m
+        labels:
+          severity: page
+        annotations:
+          summary: "Background task {{ $labels.task_name }} missed heartbeat"
+          description: "Task has not heartbeated in {{ $value | humanizeDuration }}. Possibly hung or deadlocked."
+          runbook: "docs/fmea.md#f10--hung-background-task"
+
+      - alert: InsuranceFundLow
+        expr: exchange_insurance_fund_balance_usd < 10000
+        for: 5m
+        labels:
+          severity: page
+        annotations:
+          summary: "Insurance fund below $10,000"
+          description: "Insurance fund is {{ $value | humanize }}. Check for liquidation cascade."
+          runbook: "docs/runbooks/liquidation-cascade.md"
+
+      - alert: LiquidationRateSpike
+        expr: rate(exchange_liquidations_total[5m]) * 60 > 50
+        for: 2m
+        labels:
+          severity: page
+        annotations:
+          summary: "Liquidation rate > 50/min — possible cascade"
+          runbook: "docs/runbooks/liquidation-cascade.md"
+
+      - alert: DiskUsageHigh
+        expr: node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} < 0.15
+        for: 5m
+        labels:
+          severity: ticket
+        annotations:
+          summary: "Disk usage above 85% — WAL segments may fill up"
+
+      - alert: ErrorRateHigh
+        expr: |
+          sum(rate(exchange_http_errors_total{status=~"5.."}[5m]))
+          / sum(rate(exchange_http_requests_total[5m])) > 0.01
+        for: 5m
+        labels:
+          severity: page
+        annotations:
+          summary: "HTTP 5xx error rate above 1%"

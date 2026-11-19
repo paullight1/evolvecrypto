@@ -1,0 +1,15 @@
+/* === SPACING TOKENS === */
+:root {
+  --gap:     1px;
+  --pad-2xs: 2px;
+  --pad-xs:  4px;
+  --pad-sm:  8px;
+  --pad:     12px;
+  --pad-lg:  16px;
+  --pad-xl:  24px;
+  --pad-xxl: 32px;
+
+  --header-h:     48px;
+  --sidebar-w:    240px;
+  --statusbar-h:  24px;
+}

@@ -1,0 +1,91 @@
+/* === Accordion === */
+
+.accordion {
+  width: 100%;
+}
+
+/* Item */
+.item {
+  border-bottom: 1px solid var(--border-1);
+}
+
+.item:first-child {
+  border-top: 1px solid var(--border-1);
+}
+
+.disabled {
+  opacity: 0.5;
+}
+
+/* Header button */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: var(--pad) var(--pad-lg);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: var(--text-0);
+  font-family: var(--font-ui);
+  font-size: var(--text-md);
+  font-weight: var(--font-medium);
+  transition: background var(--transition-fast);
+}
+
+.header:hover:not(:disabled) {
+  background: var(--bg-3);
+}
+
+.header:disabled {
+  color: var(--text-3);
+  cursor: not-allowed;
+}
+
+.title {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Chevron */
+.chevron {
+  flex-shrink: 0;
+  margin-left: var(--pad-sm);
+  color: var(--text-2);
+  font-size: var(--text-xs);
+  transition: transform var(--transition-fast);
+  transform: rotate(0deg);
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* Panel animation via CSS grid trick */
+.panelWrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--transition-normal);
+  overflow: hidden;
+}
+
+.panelWrapperOpen {
+  grid-template-rows: 1fr;
+}
+
+/* Inner div must have min-height: 0 for the grid trick to clip properly */
+.panelContent {
+  min-height: 0;
+  padding: 0 var(--pad-lg) 0;
+  color: var(--text-1);
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  overflow: hidden;
+  transition: padding var(--transition-normal);
+}
+
+.panelWrapperOpen .panelContent {
+  padding: var(--pad-sm) var(--pad-lg) var(--pad-lg);
+}

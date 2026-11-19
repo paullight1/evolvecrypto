@@ -1,0 +1,104 @@
+{
+  "dashboard": {
+    "title": "Background Task Health",
+    "uid": "task-health",
+    "tags": ["exchange", "tasks", "health"],
+    "timezone": "utc",
+    "refresh": "30s",
+    "time": { "from": "now-1h", "to": "now" },
+    "panels": [
+      {
+        "title": "Task Heartbeat Age (seconds since last beat)",
+        "description": "Tasks with age > 120s are flagged by the watchdog as potentially hung.",
+        "type": "table",
+        "gridPos": { "h": 10, "w": 24, "x": 0, "y": 0 },
+        "targets": [
+          {
+            "expr": "time() - exchange_task_heartbeat_last_timestamp",
+            "legendFormat": "{{task_name}}",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s",
+            "thresholds": {
+              "steps": [
+                { "value": 0, "color": "green" },
+                { "value": 60, "color": "yellow" },
+                { "value": 120, "color": "red" }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "title": "Audit Log Flusher: Entries Pending",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 6, "x": 0, "y": 10 },
+        "targets": [
+          {
+            "expr": "exchange_audit_log_pending_entries",
+            "legendFormat": "Pending"
+          }
+        ]
+      },
+      {
+        "title": "Liquidation Monitor: Liquidations/min",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+        "targets": [
+          {
+            "expr": "rate(exchange_liquidations_total[1m]) * 60",
+            "legendFormat": "Liquidations/min"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "steps": [
+                { "value": 0, "color": "green" },
+                { "value": 10, "color": "yellow" },
+                { "value": 100, "color": "red" }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "title": "Insurance Fund Balance",
+        "type": "timeseries",
+        "gridPos": { "h": 8, "w": 12, "x": 12, "y": 14 },
+        "targets": [
+          {
+            "expr": "exchange_insurance_fund_balance_usd",
+            "legendFormat": "Insurance Fund USD"
+          }
+        ]
+      },
+      {
+        "title": "Withdrawal Queue Depth",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 6, "x": 6, "y": 10 },
+        "targets": [
+          {
+            "expr": "exchange_withdrawals_pending",
+            "legendFormat": "Pending"
+          }
+        ]
+      },
+      {
+        "title": "Deposit Queue Depth",
+        "type": "stat",
+        "gridPos": { "h": 4, "w": 6, "x": 12, "y": 10 },
+        "targets": [
+          {
+            "expr": "exchange_deposits_pending",
+            "legendFormat": "Pending"
+          }
+        ]
+      }
+    ]
+  }
+}

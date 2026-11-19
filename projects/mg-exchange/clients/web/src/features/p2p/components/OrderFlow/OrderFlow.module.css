@@ -1,0 +1,2 @@
+.orderId { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-2); }
+.actions { display: flex; gap: 4px; }

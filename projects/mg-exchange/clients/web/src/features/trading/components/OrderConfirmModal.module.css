@@ -1,0 +1,69 @@
+/* OrderConfirmModal — CSS Module */
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: var(--bg-3);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--text-1);
+  border-bottom: 1px solid var(--border-0);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.rowLabel {
+  color: var(--text-2);
+}
+
+.rowTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-0);
+  background: var(--bg-4);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.buyText {
+  color: var(--long);
+  font-weight: var(--font-medium);
+}
+
+.sellText {
+  color: var(--short);
+  font-weight: var(--font-medium);
+}
+
+
+.footer {
+  display: flex;
+  gap: var(--pad-sm);
+  justify-content: flex-end;
+  padding-top: var(--pad-xs);
+}

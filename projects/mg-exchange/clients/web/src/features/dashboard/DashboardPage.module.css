@@ -1,0 +1,151 @@
+.page {
+  padding: var(--pad-lg);
+  max-width: 1400px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+  margin-bottom: var(--pad-lg);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pad);
+}
+
+.gridFull {
+  grid-column: 1 / -1;
+}
+
+.summaryCard,
+.actionsCard,
+.tableCard {
+  height: 100%;
+}
+
+.cardTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-1);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--pad);
+}
+
+.equityRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--pad-sm);
+}
+
+.equityLabel {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.equityValue {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+  font-family: var(--font-data);
+}
+
+.statsRow {
+  display: flex;
+  gap: var(--pad-lg);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statLabel {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+}
+
+.statValue {
+  font-size: var(--text-sm);
+  color: var(--text-0);
+  font-family: var(--font-data);
+}
+
+.positive { color: var(--color-buy); }
+.negative { color: var(--color-sell); }
+
+.actionsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pad-sm);
+}
+
+.skeletonCard {
+  height: 160px;
+  background: var(--bg-2);
+  border-radius: var(--radius);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ── Tablet (≤1200px): collapse 2-column grid to single column for full-width cards,
+      keep the stat/actions row as two columns ── */
+@media (max-width: 1200px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .statsRow {
+    flex-wrap: wrap;
+    gap: var(--pad);
+  }
+}
+
+/* ── Mobile (≤767px): single column, stack everything vertically ── */
+@media (max-width: 767px) {
+  .page {
+    padding: var(--pad);
+  }
+
+  .title {
+    font-size: var(--text-lg);
+    margin-bottom: var(--pad);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* gridFull is already 1/-1; keep it — no change needed for span */
+
+  .actionsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .statsRow {
+    flex-direction: column;
+    gap: var(--pad-sm);
+  }
+
+  .equityRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--pad-xs);
+  }
+
+  .equityValue {
+    font-size: var(--text-lg);
+  }
+}

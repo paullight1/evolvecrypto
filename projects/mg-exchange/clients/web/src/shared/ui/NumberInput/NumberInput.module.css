@@ -1,0 +1,133 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xs);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-1);
+  font-family: var(--font-ui);
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition-fast);
+}
+
+.inputRow:focus-within {
+  border-color: var(--accent);
+}
+
+/* Sizes */
+.sm .input {
+  font-size: var(--text-sm);
+  padding: var(--pad-xs) var(--pad-sm);
+}
+
+.md .input {
+  font-size: var(--text-base);
+  padding: var(--pad-sm) var(--pad);
+}
+
+.hasError {
+  border-color: var(--short) !important;
+}
+
+.isDisabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-0);
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  padding: var(--pad-sm) var(--pad);
+  min-width: 0;
+}
+
+.input::placeholder {
+  color: var(--text-3);
+}
+
+/* Hide browser number spin buttons */
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.prefix,
+.suffix {
+  padding: 0 var(--pad-sm);
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.stepper {
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border-1);
+  flex-shrink: 0;
+}
+
+.stepBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 16px;
+  background: var(--bg-4);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: var(--text-2);
+  font-size: 11px;
+  line-height: 1;
+  padding: 0;
+  user-select: none;
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.stepBtn:first-child {
+  border-radius: 0 var(--radius-sm) 0 0;
+  border-bottom: 1px solid var(--border-1);
+}
+
+.stepBtn:last-child {
+  border-radius: 0 0 var(--radius-sm) 0;
+}
+
+.stepBtn:hover:not(:disabled) {
+  color: var(--text-0);
+  background: var(--bg-5, var(--bg-4));
+}
+
+.stepBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.error {
+  font-size: var(--text-xs);
+  color: var(--short);
+  font-family: var(--font-ui);
+}

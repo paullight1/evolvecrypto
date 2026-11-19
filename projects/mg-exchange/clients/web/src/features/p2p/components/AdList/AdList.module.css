@@ -1,0 +1,14 @@
+.wrap { display: flex; flex-direction: column; gap: var(--pad-lg); }
+.filters { display: flex; gap: var(--pad); align-items: flex-end; }
+.trader { display: flex; align-items: center; gap: var(--pad-sm); }
+.avatar {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--accent); color: var(--bg-0);
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--text-sm); font-weight: var(--font-semibold); flex-shrink: 0;
+}
+.traderName { font-size: var(--text-sm); font-weight: var(--font-semibold); color: var(--text-0); }
+.traderStats { font-size: var(--text-xs); color: var(--text-2); }
+.methods { display: flex; gap: 4px; flex-wrap: wrap; }
+.orderForm { display: flex; flex-direction: column; gap: var(--pad); }
+.orderInfo { margin: 0; font-size: var(--text-sm); color: var(--text-1); }

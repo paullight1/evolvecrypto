@@ -1,0 +1,139 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - link "Exchange" [ref=e5] [cursor=pointer]
+    - navigation "Main navigation" [ref=e6]:
+      - button "Trade" [ref=e7] [cursor=pointer]
+      - button "Markets" [ref=e8] [cursor=pointer]
+      - button "Derivatives ▾" [ref=e10] [cursor=pointer]
+      - button "Earn" [ref=e11] [cursor=pointer]
+      - button "Bots" [ref=e12] [cursor=pointer]
+      - button "Copy" [ref=e13] [cursor=pointer]
+      - button "Web3" [ref=e14] [cursor=pointer]
+      - button "Convert" [ref=e15] [cursor=pointer]
+      - button "Buy Crypto" [ref=e16] [cursor=pointer]
+      - button "P2P" [ref=e17] [cursor=pointer]
+      - button "Launchpad" [ref=e18] [cursor=pointer]
+      - button "Competitions" [ref=e19] [cursor=pointer]
+      - button "More ▾" [ref=e21] [cursor=pointer]
+    - button "Login" [ref=e23] [cursor=pointer]:
+      - generic [ref=e24]: Login
+  - generic [ref=e26]:
+    - generic [ref=e28]:
+      - generic [ref=e29]:
+        - button "Spot" [ref=e30] [cursor=pointer]
+        - button "USDT-M" [ref=e31] [cursor=pointer]
+        - button "COIN-M" [ref=e32] [cursor=pointer]
+      - button "BTCUSDT PERP" [ref=e33] [cursor=pointer]:
+        - generic [ref=e34]: BTCUSDT
+        - generic [ref=e35]: PERP
+        - img [ref=e36]
+      - generic [ref=e39]: —
+      - separator [ref=e40]
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - generic [ref=e43]: 24h High
+          - generic [ref=e44]: —
+        - generic [ref=e45]:
+          - generic [ref=e46]: 24h Low
+          - generic [ref=e47]: —
+        - generic [ref=e48]:
+          - generic [ref=e49]: 24h Vol
+          - generic [ref=e50]: —
+        - separator [ref=e51]
+        - generic [ref=e52]:
+          - generic [ref=e53]: Mark
+          - generic [ref=e54]: —
+        - generic [ref=e55]:
+          - generic [ref=e56]: Index
+          - generic [ref=e57]: —
+        - generic [ref=e58]:
+          - generic [ref=e59]: Funding / Next
+          - generic [ref=e60]: —
+      - 'generic "WebSocket: disconnected" [ref=e61]'
+    - generic [ref=e62]:
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - generic [ref=e66]: Order Book
+          - generic [ref=e67]:
+            - combobox [ref=e68] [cursor=pointer]:
+              - option "0.01" [selected]
+              - option "0.1"
+              - option "1"
+              - option "10"
+              - option "100"
+            - button "⇅" [ref=e69] [cursor=pointer]
+            - button "↑" [ref=e70] [cursor=pointer]
+            - button "↓" [ref=e71] [cursor=pointer]
+        - generic [ref=e72]:
+          - generic [ref=e73]: Price
+          - generic [ref=e74]: Size
+          - generic [ref=e75]: Total
+        - generic [ref=e117]:
+          - generic [ref=e118]: Spread
+          - generic [ref=e119]: — —
+      - generic [ref=e162]:
+        - generic [ref=e163]: Recent Trades
+        - generic [ref=e164]:
+          - generic [ref=e165]: Price
+          - generic [ref=e166]: Size
+          - generic [ref=e167]: Time
+        - generic [ref=e169]: Waiting for trades...
+    - generic [ref=e175]:
+      - generic [ref=e176]:
+        - button "Buy / Long" [ref=e177] [cursor=pointer]
+        - button "Sell / Short" [ref=e178] [cursor=pointer]
+      - generic [ref=e179]:
+        - button "Limit" [ref=e180] [cursor=pointer]
+        - button "Market" [ref=e181] [cursor=pointer]
+        - button "Stop-Limit" [ref=e182] [cursor=pointer]
+        - button "Stop-Market" [ref=e183] [cursor=pointer]
+        - button "Trailing" [ref=e184] [cursor=pointer]
+      - generic [ref=e185]:
+        - button "GTC" [ref=e186] [cursor=pointer]
+        - button "IOC" [ref=e187] [cursor=pointer]
+        - button "FOK" [ref=e188] [cursor=pointer]
+        - button "Post Only" [ref=e189] [cursor=pointer]
+      - generic [ref=e190]:
+        - generic [ref=e191]:
+          - button "Cross" [ref=e192] [cursor=pointer]
+          - button "Isolated" [ref=e193] [cursor=pointer]
+        - button "1x" [ref=e195] [cursor=pointer]:
+          - text: 1x
+          - img [ref=e196]
+        - button "Leverage tier info" [ref=e200] [cursor=pointer]: "?"
+      - generic [ref=e201]:
+        - generic [ref=e202]:
+          - generic [ref=e203]: Price (USDT)
+          - generic [ref=e204]:
+            - generic [ref=e206]:
+              - textbox "0.00" [ref=e207]
+              - generic [ref=e208]: USDT
+            - button "Best" [ref=e209] [cursor=pointer]
+        - generic [ref=e210]:
+          - generic [ref=e212]: Amount
+          - textbox "0.00000" [ref=e215]
+        - generic [ref=e216]:
+          - button "25%" [ref=e217] [cursor=pointer]
+          - button "50%" [ref=e218] [cursor=pointer]
+          - button "75%" [ref=e219] [cursor=pointer]
+          - button "100%" [ref=e220] [cursor=pointer]
+        - generic [ref=e221] [cursor=pointer]:
+          - checkbox "Take Profit / Stop Loss" [ref=e223]
+          - generic [ref=e226]: Take Profit / Stop Loss
+        - generic [ref=e227] [cursor=pointer]:
+          - checkbox "Reduce Only" [ref=e229]
+          - generic [ref=e232]: Reduce Only
+        - button "Buy / Long" [ref=e233] [cursor=pointer]:
+          - generic [ref=e234]: Buy / Long
+    - generic [ref=e236]:
+      - tablist [ref=e238]:
+        - tab "Positions" [ref=e239] [cursor=pointer]
+        - tab "Open Orders" [selected] [ref=e240] [cursor=pointer]
+        - tab "Conditional" [ref=e241] [cursor=pointer]
+        - tab "Order History" [ref=e242] [cursor=pointer]
+        - tab "Assets" [ref=e243] [cursor=pointer]
+      - generic [ref=e245]: No open orders
+```

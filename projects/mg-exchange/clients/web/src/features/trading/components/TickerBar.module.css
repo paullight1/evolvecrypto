@@ -1,0 +1,280 @@
+.bar {
+  display: flex;
+  align-items: center;
+  gap: var(--pad);
+  padding: 0 var(--pad);
+  height: 40px;
+  background: var(--bg-2);
+  overflow: hidden;
+  white-space: nowrap;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+
+.bar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Connection status dot */
+.connDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--text-3);
+}
+
+.connDotConnected {
+  background: var(--long);
+  box-shadow: 0 0 6px var(--long);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.connDotConnecting {
+  background: var(--accent);
+  animation: blink 1s step-start infinite;
+}
+
+.connDotDisconnected {
+  background: var(--short);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.modeTabs {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.modeTab {
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.modeTab:hover {
+  color: var(--text-1);
+}
+
+.modeTabActive {
+  color: var(--text-0);
+  border-color: var(--border-2);
+  background: var(--bg-3);
+}
+
+.symbolBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: transparent;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text-0);
+  font-family: var(--font-ui);
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.symbolBtn:hover {
+  background: var(--bg-3);
+}
+
+.symbolName {
+  font-size: var(--text-base);
+  font-weight: var(--font-bold);
+}
+
+.productType {
+  font-size: 10px;
+  color: var(--accent);
+  background: rgba(240, 185, 11, 0.12);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.chevron {
+  color: var(--text-3);
+}
+
+.priceBlock {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 6px;
+  min-width: 90px;
+}
+
+.priceBlock.stale {
+  opacity: 0.6;
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+  transition: color 0.15s;
+}
+
+.priceUp {
+  color: var(--long);
+}
+
+.priceDown {
+  color: var(--short);
+}
+
+@keyframes flashUp {
+  from { background: var(--long-bg); }
+  to { background: transparent; }
+}
+
+@keyframes flashDown {
+  from { background: var(--short-bg); }
+  to { background: transparent; }
+}
+
+.flashUp {
+  animation: flashUp 0.5s ease-out;
+}
+
+.flashDown {
+  animation: flashDown 0.5s ease-out;
+}
+
+.change {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.changePos {
+  color: var(--long);
+}
+
+.changeNeg {
+  color: var(--short);
+}
+
+.spacer {
+  flex: 1;
+}
+
+.stats {
+  display: flex;
+  gap: var(--pad);
+  align-items: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.stats::-webkit-scrollbar {
+  display: none;
+}
+
+.stat {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.statLabel {
+  font-size: 10px;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.statValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+.statValuePos {
+  color: var(--long);
+}
+
+.statValueNeg {
+  color: var(--short);
+}
+
+.countdown {
+  font-size: 10px;
+  color: var(--text-2);
+}
+
+/* ─── Tablet: 768–1200px ─────────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  /* Reduce gap so the bar breathes on narrower screens */
+  .bar {
+    gap: var(--pad-sm);
+    padding: 0 var(--pad-sm);
+  }
+
+  /* Hide the lower-priority stats: Mark, Index, Funding */
+  .stat:nth-child(n+4) {
+    display: none;
+  }
+}
+
+/* ─── Mobile: < 768px ────────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .bar {
+    gap: var(--pad-xs);
+    padding: 0 var(--pad-xs);
+  }
+
+  /* Hide all stats on mobile — too narrow */
+  .stats {
+    display: none;
+  }
+
+  /* Hide the mode tabs on mobile — handled by the terminal's tab bar */
+  .modeTabs {
+    display: none;
+  }
+
+  /* Truncate long symbol names (e.g. BTCUSDT-PERP) */
+  .symbolName {
+    max-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Keep price block but tighten it */
+  .priceBlock {
+    min-width: 0;
+    gap: 4px;
+  }
+
+  .price {
+    font-size: var(--text-base);
+  }
+
+  .change {
+    font-size: 10px;
+  }
+}

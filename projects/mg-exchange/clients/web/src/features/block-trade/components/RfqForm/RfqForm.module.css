@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+  max-width: 440px;
+}
+
+.notice {
+  background: var(--bg-3);
+}
+
+.noticeText {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}

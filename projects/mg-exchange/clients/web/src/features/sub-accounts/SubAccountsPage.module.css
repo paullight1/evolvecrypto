@@ -1,0 +1,43 @@
+.page {
+  padding: var(--pad-lg);
+  max-width: 900px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+}
+
+.createForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+.formRow {
+  display: flex;
+  gap: var(--pad-sm);
+  align-items: flex-end;
+}
+
+.sectionTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--font-bold);
+  color: var(--text-1);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--pad-sm);
+}
+
+.balanceSection {
+  margin-top: var(--pad-sm);
+  padding-top: var(--pad-sm);
+  border-top: 1px solid var(--border-0);
+}

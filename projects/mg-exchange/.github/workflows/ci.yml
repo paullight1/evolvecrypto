@@ -1,0 +1,119 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+env:
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: exchange
+          POSTGRES_PASSWORD: exchange
+          POSTGRES_DB: exchange_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install sqlx-cli
+        # Used below to apply DB migrations before integration tests.
+        # Cached by Swatinem/rust-cache so the compile happens on first run
+        # only. `--no-default-features` drops MySQL/SQLite — we only need
+        # postgres with rustls.
+        run: cargo install sqlx-cli --no-default-features --features postgres,rustls --version 0.8.2 --locked
+
+      - name: Apply DB migrations
+        env:
+          DATABASE_URL: postgres://exchange:exchange@localhost:5432/exchange_test
+        run: sqlx migrate run --source migrations
+
+      - name: Check formatting
+        run: cargo fmt --check
+
+      - name: Clippy
+        run: cargo clippy -- -D warnings
+
+      - name: Run tests
+        env:
+          DATABASE_URL: postgres://exchange:exchange@localhost:5432/exchange_test
+          # `TEST_DATABASE_URL` gates 30 ignored DB integration tests
+          # (ledger, pg_account_manager, aml_repo, api_key_repo, audit_repo,
+          # fee_repo, funding_repo, kyc_repo, order_repo, position_repo,
+          # trade_repo, e2e_db_*). Running with `--include-ignored` executes
+          # them against the postgres service started above.
+          TEST_DATABASE_URL: postgres://exchange:exchange@localhost:5432/exchange_test
+        # `--tests` scopes to test/bench binaries only — doctests are run in a
+        # separate step below so that `--include-ignored` does not try to
+        # compile the 9 ignored doctests (they are `ignore`d because they
+        # reference types that cannot be put in scope inside a doctest).
+        run: cargo test --tests --include-ignored
+
+      - name: Run doctests
+        env:
+          DATABASE_URL: postgres://exchange:exchange@localhost:5432/exchange_test
+          TEST_DATABASE_URL: postgres://exchange:exchange@localhost:5432/exchange_test
+        run: cargo test --doc
+
+      - name: Build release
+        run: cargo build --release -p exchange-server
+
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: clients/web
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npm run build
+
+  docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    needs: [test, frontend]
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build exchange image
+        run: docker build -t exchange:latest .
+
+      - name: Build web image
+        run: docker build -t exchange-web:latest clients/web

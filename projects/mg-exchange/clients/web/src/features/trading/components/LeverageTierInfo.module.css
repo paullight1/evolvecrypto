@@ -1,0 +1,65 @@
+/* LeverageTierInfo — CSS Module */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-0);
+}
+
+.symbol {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--accent);
+}
+
+.note {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ui);
+  font-size: 11px;
+}
+
+.th {
+  text-align: left;
+  padding: 4px 6px;
+  color: var(--text-3);
+  font-weight: var(--font-medium);
+  border-bottom: 1px solid var(--border-1);
+  white-space: nowrap;
+}
+
+.tr:hover {
+  background: var(--bg-3);
+}
+
+.td {
+  padding: 4px 6px;
+  color: var(--text-1);
+  border-bottom: 1px solid var(--border-0);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.accentMono {
+  font-family: var(--font-mono);
+  color: var(--accent);
+}

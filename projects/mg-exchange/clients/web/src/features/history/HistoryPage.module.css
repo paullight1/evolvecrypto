@@ -1,0 +1,59 @@
+.page {
+  padding: var(--pad-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+  margin-bottom: var(--pad);
+}
+
+.tabs { margin-bottom: var(--pad); }
+
+.toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--pad-sm);
+  margin-bottom: var(--pad);
+  flex-wrap: wrap;
+}
+
+.exportBtn {
+  margin-left: auto;
+}
+
+.taxCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.taxStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--pad-sm);
+}
+
+.taxStat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.taxStatLabel {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+  text-transform: uppercase;
+}
+
+.taxStatValue {
+  font-size: var(--text-lg);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+  font-family: var(--font-data);
+}

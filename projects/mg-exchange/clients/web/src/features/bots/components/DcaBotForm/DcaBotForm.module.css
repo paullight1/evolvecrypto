@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+  max-width: 480px;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--pad);
+  background: var(--bg-2);
+  border-radius: var(--radius);
+}
+
+.summaryLabel {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.summaryValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+}

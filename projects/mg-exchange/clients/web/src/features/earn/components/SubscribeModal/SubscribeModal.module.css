@@ -1,0 +1,58 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-lg);
+}
+
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xs);
+  padding: var(--pad);
+  background: var(--bg-2);
+  border-radius: var(--radius);
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.value {
+  font-size: var(--text-sm);
+  color: var(--text-1);
+}
+
+.apyValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-long);
+}
+
+.estimate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--pad);
+  background: var(--bg-2);
+  border-radius: var(--radius);
+}
+
+.estimateLabel {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.estimateValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+}

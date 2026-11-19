@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+  max-width: 420px;
+}
+
+.swapButton {
+  background: var(--bg-3);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius-sm);
+  color: var(--text-1);
+  cursor: pointer;
+  font-size: var(--text-md);
+  padding: 4px 12px;
+  align-self: flex-start;
+  transition: background 0.15s;
+}
+
+.swapButton:hover {
+  background: var(--bg-4, var(--bg-3));
+  color: var(--text-0);
+}
+
+.quoteCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+.quoteRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quoteLabel {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.quoteValue {
+  font-size: var(--text-sm);
+  color: var(--text-0);
+  font-family: var(--font-data);
+}
+
+.timerRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-sm);
+}
+
+.timerProgress {
+  flex: 1;
+}
+
+.timerText {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+  font-family: var(--font-data);
+  min-width: 80px;
+  text-align: right;
+}

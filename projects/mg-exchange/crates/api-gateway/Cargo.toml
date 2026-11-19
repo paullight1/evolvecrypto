@@ -1,0 +1,92 @@
+[package]
+name = "exchange-api-gateway"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+exchange-common = { workspace = true }
+exchange-market-data = { workspace = true }
+exchange-matching-engine = { workspace = true }
+exchange-account = { workspace = true }
+exchange-journal = { workspace = true }
+exchange-order-gateway = { workspace = true }
+exchange-admin = { workspace = true }
+exchange-risk-engine = { workspace = true }
+exchange-settlement = { workspace = true }
+exchange-trigger-service = { workspace = true }
+exchange-custody = { workspace = true }
+exchange-index-price = { workspace = true }
+exchange-surveillance = { workspace = true }
+exchange-compliance = { workspace = true }
+exchange-proof-of-reserves = { workspace = true }
+exchange-copy-trading = { workspace = true }
+exchange-trading-bots = { workspace = true }
+exchange-algo-execution = { workspace = true }
+exchange-market-maker = { workspace = true }
+exchange-asset-registry = { workspace = true }
+exchange-fix-gateway = { workspace = true }
+exchange-defi-yield = { workspace = true }
+exchange-dex-aggregator = { workspace = true }
+exchange-web3-wallet = { workspace = true }
+exchange-db = { path = "../db" }
+sqlx = { workspace = true }
+
+tokio = { workspace = true }
+axum = { workspace = true }
+tower = { workspace = true }
+tower-http = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+rust_decimal = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+hmac = { workspace = true }
+sha1 = "0.10"
+sha2 = { workspace = true }
+jsonwebtoken = { workspace = true }
+aes-gcm = { workspace = true }
+base64 = { workspace = true }
+argon2 = "0.5"
+parking_lot = { workspace = true }
+arc-swap = { workspace = true }
+dashmap = { workspace = true }
+
+csv = "1.3"
+reqwest = { version = "0.12", features = ["rustls-tls"], default-features = false }
+
+# WebSocket
+futures = "0.3"
+hex = "0.4"
+rand_core = { version = "0.6", features = ["getrandom"] }
+
+# RSA + Ed25519 API key signing (Feature 2)
+# Note: pkcs1 is a required (non-optional) dependency of rsa 0.9, not a feature flag.
+rsa = { version = "0.9", features = ["pem", "sha2"] }
+pkcs1 = "0.7"
+ed25519-dalek = { version = "2", features = ["rand_core"] }
+
+[features]
+# Enable when running benchmarks to unlock build_router_unlimited() which
+# uses an unlimited-rate TieredRateLimiter so microbenchmarks are not throttled
+# by the token-bucket middleware.  NEVER enable in production builds.
+bench = []
+
+[dev-dependencies]
+rust_decimal_macros = "1"
+tokio = { workspace = true, features = ["test-util"] }
+criterion = { version = "0.5", features = ["html_reports", "async_tokio"] }
+tower = { workspace = true }
+exchange-order-gateway = { workspace = true }
+tempfile = "3"
+
+[[bench]]
+name = "api_bench"
+harness = false
+# Bench requires `bench` feature for `build_router_unlimited`, otherwise the
+# HTTP token-bucket middleware throttles the bench at ~30 rps and the full
+# REST benchmark fails with 429 Too Many Requests. With required-features set,
+# `cargo bench -p exchange-api-gateway` automatically enables the feature.
+required-features = ["bench"]

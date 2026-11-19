@@ -1,0 +1,1205 @@
+openapi: 3.0.3
+info:
+  title: Exchange API
+  version: 1.0.0
+  description: |
+    A transparent crypto exchange API.
+
+    ## Authentication
+
+    Most private endpoints accept either a JWT Bearer token (obtained via `/auth/login`)
+    or HMAC API keys created in your account settings.
+
+    ### JWT Bearer
+    Include the header: `Authorization: Bearer <access_token>`
+
+    Tokens expire after **15 minutes**. Use `/auth/refresh` to renew.
+
+    ### HMAC API Key
+    Every request must include four headers:
+    - `X-API-Key` — your API key
+    - `X-API-Sign` — HMAC-SHA256 hex signature
+    - `X-API-Timestamp` — Unix ms timestamp (must be within recv-window)
+    - `X-API-Recv-Window` — tolerance window in ms (default 5000, max 60000)
+
+    **Signature construction:**
+    ```
+    sign_str  = timestamp + api_key + recv_window + body_string
+    signature = HMAC-SHA256(api_secret, sign_str).hexdigest()
+    ```
+    For GET requests `body_string` is empty.
+
+    ## Rate Limits
+
+    | Tier | Limit |
+    |------|-------|
+    | Public (market data) | 120 req/min per IP |
+    | Private (trading) | 600 req/min per UID |
+    | Order placement | 100 orders/10 s per UID |
+
+    Rate limit headers are included in every response:
+    `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`
+
+    ## Pagination
+
+    Paginated endpoints accept `limit` (max 200) and `cursor` (opaque token from
+    `next_cursor` in the previous response).
+
+  contact:
+    name: API Support
+    email: api@example.com
+    url: https://example.com/api-docs
+  license:
+    name: Proprietary
+
+servers:
+  - url: https://api.example.com/api/v1
+    description: Production
+  - url: https://testnet.example.com/api/v1
+    description: Testnet (paper trading, no real funds)
+
+tags:
+  - name: Auth
+    description: Registration, login, token refresh
+  - name: Orders
+    description: Place, amend, and cancel orders
+  - name: Markets
+    description: Public market data — orderbook, ticker, klines, trades
+  - name: Account
+    description: Balances and wallet summary
+  - name: Positions
+    description: Open positions, leverage, TP/SL
+  - name: Funding
+    description: Perpetual funding rates and payment history
+
+security:
+  - bearerAuth: []
+
+paths:
+
+  # ── Authentication ──────────────────────────────────────────────────────────
+
+  /auth/register:
+    post:
+      tags: [Auth]
+      operationId: register
+      summary: Create a new account
+      description: Register with email and password. Returns JWT tokens on success.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+            example:
+              email: trader@example.com
+              password: s3cur3P@ss
+              referral_code: REF123
+      responses:
+        '200':
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      operationId: login
+      summary: Login and receive tokens
+      description: Authenticate with email/password. Returns a short-lived access token and a long-lived refresh token.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              email: trader@example.com
+              password: s3cur3P@ss
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /auth/refresh:
+    post:
+      tags: [Auth]
+      operationId: refreshToken
+      summary: Refresh an expired access token
+      description: Exchange a valid refresh token for a new access token. The refresh token is rotated on each call.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [refresh_token]
+              properties:
+                refresh_token:
+                  type: string
+                  description: Refresh token from the last login or refresh response
+      responses:
+        '200':
+          description: New access token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  # ── Orders ──────────────────────────────────────────────────────────────────
+
+  /orders:
+    post:
+      tags: [Orders]
+      operationId: placeOrder
+      summary: Place a new order
+      description: |
+        Place a limit, market, stop-limit, stop-market, or conditional order.
+
+        **Time in force:**
+        - `gtc` — good till cancelled (default)
+        - `ioc` — immediate or cancel (unfilled portion cancelled)
+        - `fok` — fill or kill (entire qty or cancel)
+        - `post_only` — rejected if it would immediately match (maker only)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlaceOrderRequest'
+            examples:
+              limit_buy:
+                summary: Limit buy
+                value:
+                  symbol: BTCUSDT
+                  side: buy
+                  order_type: limit
+                  qty: "0.001"
+                  price: "60000.00"
+                  time_in_force: gtc
+              market_sell:
+                summary: Market sell
+                value:
+                  symbol: ETHUSDT
+                  side: sell
+                  order_type: market
+                  qty: "0.1"
+      responses:
+        '200':
+          description: Order placed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+    get:
+      tags: [Orders]
+      operationId: listOrders
+      summary: List open orders
+      description: Returns all open orders, optionally filtered by symbol.
+      parameters:
+        - name: symbol
+          in: query
+          description: Filter by trading pair (e.g. BTCUSDT)
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 200
+        - name: cursor
+          in: query
+          description: Pagination cursor from previous response
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Open orders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+                  next_cursor:
+                    type: string
+                    nullable: true
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /orders/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: string
+
+    get:
+      tags: [Orders]
+      operationId: getOrder
+      summary: Get a specific order
+      description: Retrieve full details of a single order including fill history.
+      responses:
+        '200':
+          description: Order detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    put:
+      tags: [Orders]
+      operationId: amendOrder
+      summary: Amend an open order
+      description: Modify the price or quantity of an unfilled resting order. Only fields provided are updated.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                price:
+                  type: string
+                  description: New limit price (decimal string)
+                qty:
+                  type: string
+                  description: New quantity (decimal string)
+            example:
+              price: "61500.00"
+      responses:
+        '200':
+          description: Order updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags: [Orders]
+      operationId: cancelOrder
+      summary: Cancel an open order
+      description: Cancel a resting order. Returns the cancelled order state.
+      responses:
+        '200':
+          description: Order cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /orders/cancel-all:
+    post:
+      tags: [Orders]
+      operationId: cancelAllOrders
+      summary: Cancel all open orders
+      description: Cancel all resting orders, optionally scoped to a single symbol.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                symbol:
+                  type: string
+                  description: If provided, only cancel orders for this symbol
+            example:
+              symbol: BTCUSDT
+      responses:
+        '200':
+          description: Cancellation result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cancelled_count:
+                    type: integer
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  # ── Markets ─────────────────────────────────────────────────────────────────
+
+  /markets/all:
+    get:
+      tags: [Markets]
+      operationId: listMarkets
+      summary: List all trading pairs
+      description: Returns all active markets with 24-hour statistics. No authentication required.
+      security: []
+      parameters:
+        - name: category
+          in: query
+          description: Filter by product type
+          schema:
+            type: string
+            enum: [spot, linear, inverse]
+      responses:
+        '200':
+          description: Market list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ticker'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /markets/{symbol}/orderbook:
+    get:
+      tags: [Markets]
+      operationId: getOrderBook
+      summary: L2 order book snapshot
+      description: Returns up to `depth` price levels on each side. Sequence numbers allow gap detection for incremental updates.
+      security: []
+      parameters:
+        - name: symbol
+          in: path
+          required: true
+          schema:
+            type: string
+          example: BTCUSDT
+        - name: depth
+          in: query
+          description: Number of price levels per side (default 25, max 200)
+          schema:
+            type: integer
+            default: 25
+            maximum: 200
+      responses:
+        '200':
+          description: Order book snapshot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderBook'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /markets/{symbol}/ticker:
+    get:
+      tags: [Markets]
+      operationId: getTicker
+      summary: 24-hour ticker for a symbol
+      description: Returns last price, 24h high/low/volume, funding rate, and open interest for the specified symbol.
+      security: []
+      parameters:
+        - name: symbol
+          in: path
+          required: true
+          schema:
+            type: string
+          example: BTCUSDT
+      responses:
+        '200':
+          description: Ticker
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Ticker'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /markets/{symbol}/klines:
+    get:
+      tags: [Markets]
+      operationId: getKlines
+      summary: OHLCV candlestick data
+      description: Returns historical klines for charting. Sorted oldest-first.
+      security: []
+      parameters:
+        - name: symbol
+          in: path
+          required: true
+          schema:
+            type: string
+          example: BTCUSDT
+        - name: interval
+          in: query
+          required: true
+          description: Candle interval
+          schema:
+            type: string
+            enum: [1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M]
+          example: 1h
+        - name: start
+          in: query
+          description: Start time (Unix ms)
+          schema:
+            type: integer
+        - name: end
+          in: query
+          description: End time (Unix ms, defaults to now)
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Number of candles (default 200, max 1000)
+          schema:
+            type: integer
+            default: 200
+            maximum: 1000
+      responses:
+        '200':
+          description: Klines array
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Kline'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /markets/{symbol}/trades:
+    get:
+      tags: [Markets]
+      operationId: getRecentTrades
+      summary: Recent public trades
+      description: Returns the most recent public trades for a symbol.
+      security: []
+      parameters:
+        - name: symbol
+          in: path
+          required: true
+          schema:
+            type: string
+          example: BTCUSDT
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 500
+      responses:
+        '200':
+          description: Trade list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Trade'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  # ── Account ─────────────────────────────────────────────────────────────────
+
+  /account/balances:
+    get:
+      tags: [Account]
+      operationId: getBalances
+      summary: Asset balances
+      description: Returns available, locked, and total balances for each asset held in the account.
+      responses:
+        '200':
+          description: Balance list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Balance'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /account/wallet:
+    get:
+      tags: [Account]
+      operationId: getWallet
+      summary: Wallet summary
+      description: Returns total equity, unrealised PnL, margin used, and available margin across all positions.
+      responses:
+        '200':
+          description: Wallet summary
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  equity_usd:
+                    type: string
+                    description: Total account equity in USD
+                  available_margin_usd:
+                    type: string
+                    description: Margin available for new positions
+                  used_margin_usd:
+                    type: string
+                    description: Margin locked in open positions
+                  unrealised_pnl_usd:
+                    type: string
+                    description: Mark-to-market PnL across all positions
+                  margin_ratio:
+                    type: string
+                    description: Used margin / equity (0–1)
+              example:
+                equity_usd: "12540.00"
+                available_margin_usd: "10200.00"
+                used_margin_usd: "2340.00"
+                unrealised_pnl_usd: "85.50"
+                margin_ratio: "0.187"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ── Positions ────────────────────────────────────────────────────────────────
+
+  /positions:
+    get:
+      tags: [Positions]
+      operationId: listPositions
+      summary: List open positions
+      description: Returns all open perpetual positions with real-time mark PnL.
+      parameters:
+        - name: symbol
+          in: query
+          description: Filter by symbol
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Position list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Position'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /position/leverage:
+    post:
+      tags: [Positions]
+      operationId: setLeverage
+      summary: Set position leverage
+      description: |
+        Set the leverage for a symbol. Affects all future orders on that symbol.
+        Isolated and cross-margin are both supported.
+
+        Changing leverage while a position is open will recalculate the maintenance margin
+        and may trigger an immediate liquidation check.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [symbol, leverage]
+              properties:
+                symbol:
+                  type: string
+                leverage:
+                  type: integer
+                  minimum: 1
+                  maximum: 100
+                margin_mode:
+                  type: string
+                  enum: [cross, isolated]
+                  default: cross
+            example:
+              symbol: BTCUSDT
+              leverage: 10
+              margin_mode: isolated
+      responses:
+        '200':
+          description: Leverage updated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  symbol:
+                    type: string
+                  leverage:
+                    type: integer
+                  margin_mode:
+                    type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /position/trading-stop:
+    post:
+      tags: [Positions]
+      operationId: setTradingStop
+      summary: Set take-profit and stop-loss
+      description: |
+        Attach or update TP/SL/trailing-stop on an open position. Any field may be omitted
+        to leave it unchanged. Pass `null` to remove a trigger.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [symbol]
+              properties:
+                symbol:
+                  type: string
+                take_profit:
+                  type: string
+                  nullable: true
+                  description: TP trigger price (null to remove)
+                stop_loss:
+                  type: string
+                  nullable: true
+                  description: SL trigger price (null to remove)
+                trailing_stop:
+                  type: string
+                  nullable: true
+                  description: Trailing stop distance in price units
+            example:
+              symbol: BTCUSDT
+              take_profit: "72000.00"
+              stop_loss: "55000.00"
+      responses:
+        '200':
+          description: Trading stops updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Position'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # ── Funding ──────────────────────────────────────────────────────────────────
+
+  /funding/rate:
+    get:
+      tags: [Funding]
+      operationId: getFundingRates
+      summary: Current funding rates
+      description: Returns the latest predicted funding rate and next settlement time for all perpetual markets.
+      security: []
+      parameters:
+        - name: symbol
+          in: query
+          description: Filter to a single symbol
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Funding rates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    symbol:
+                      type: string
+                    funding_rate:
+                      type: string
+                      description: Rate as a decimal (e.g. "0.0001" = 0.01%)
+                    next_funding_time:
+                      type: integer
+                      description: Unix ms timestamp of next settlement
+              example:
+                - symbol: BTCUSDT
+                  funding_rate: "0.0001"
+                  next_funding_time: 1700028800000
+                - symbol: ETHUSDT
+                  funding_rate: "-0.0002"
+                  next_funding_time: 1700028800000
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /funding/history:
+    get:
+      tags: [Funding]
+      operationId: getFundingHistory
+      summary: Funding payment history
+      description: Returns historical funding payments credited or debited to the authenticated account.
+      parameters:
+        - name: symbol
+          in: query
+          schema:
+            type: string
+          example: BTCUSDT
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 50
+            maximum: 200
+        - name: cursor
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Funding payment history
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  payments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        symbol:
+                          type: string
+                        rate:
+                          type: string
+                        payment:
+                          type: string
+                          description: Positive = received, negative = paid
+                        position_size:
+                          type: string
+                        timestamp:
+                          type: string
+                          format: date-time
+                  next_cursor:
+                    type: string
+                    nullable: true
+              example:
+                payments:
+                  - symbol: BTCUSDT
+                    rate: "0.0001"
+                    payment: "-2.50"
+                    position_size: "0.1"
+                    timestamp: "2026-01-01T08:00:00Z"
+                next_cursor: null
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+# ── Components ───────────────────────────────────────────────────────────────
+
+components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT access token obtained from /auth/login or /auth/refresh
+    apiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: |
+        HMAC API key. Must be combined with X-API-Sign, X-API-Timestamp, and X-API-Recv-Window headers.
+
+  responses:
+    BadRequest:
+      description: Invalid request parameters
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: INVALID_PARAMS
+            message: "qty must be greater than 0"
+    Unauthorized:
+      description: Missing or invalid authentication credentials
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: UNAUTHORIZED
+            message: "Token expired or invalid"
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: NOT_FOUND
+            message: "Order not found"
+    RateLimited:
+      description: Too many requests
+      headers:
+        Retry-After:
+          schema:
+            type: integer
+          description: Seconds until the rate limit resets
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            code: RATE_LIMITED
+            message: "Too many requests — retry after 1s"
+
+  schemas:
+
+    ErrorResponse:
+      type: object
+      required: [code, message]
+      properties:
+        code:
+          type: string
+          description: Machine-readable error code
+          example: INVALID_PARAMS
+        message:
+          type: string
+          description: Human-readable explanation
+          example: "qty must be greater than 0"
+        details:
+          type: object
+          description: Optional structured details (field-level validation errors, etc.)
+          additionalProperties: true
+
+    RegisterRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        referral_code:
+          type: string
+          nullable: true
+
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        totp_code:
+          type: string
+          description: Required if 2FA is enabled on the account
+
+    AuthResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: Short-lived JWT (15 min)
+        refresh_token:
+          type: string
+          description: Long-lived refresh token (30 days)
+        user_id:
+          type: string
+
+    PlaceOrderRequest:
+      type: object
+      required: [symbol, side, order_type, qty]
+      properties:
+        symbol:
+          type: string
+          example: BTCUSDT
+        side:
+          type: string
+          enum: [buy, sell]
+        order_type:
+          type: string
+          enum: [limit, market, stop_limit, stop_market]
+        qty:
+          type: string
+          description: Order quantity (decimal string to preserve precision)
+          example: "0.001"
+        price:
+          type: string
+          description: Limit price — required for limit and stop_limit orders
+          example: "60000.00"
+        stop_price:
+          type: string
+          description: Stop trigger price — required for stop_limit and stop_market orders
+        time_in_force:
+          type: string
+          enum: [gtc, ioc, fok, post_only]
+          default: gtc
+        reduce_only:
+          type: boolean
+          default: false
+          description: If true, the order can only reduce an existing position
+        client_order_id:
+          type: string
+          description: Optional idempotency key (max 36 chars)
+
+    Order:
+      type: object
+      properties:
+        order_id:
+          type: string
+          example: ord_abc123
+        client_order_id:
+          type: string
+          nullable: true
+        symbol:
+          type: string
+          example: BTCUSDT
+        side:
+          type: string
+          enum: [buy, sell]
+        order_type:
+          type: string
+          enum: [limit, market, stop_limit, stop_market]
+        qty:
+          type: string
+          description: Total quantity
+        filled_qty:
+          type: string
+          description: Quantity filled so far
+        price:
+          type: string
+          nullable: true
+          description: Limit price (null for market orders)
+        avg_fill_price:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [open, partially_filled, filled, cancelled, rejected, expired]
+        time_in_force:
+          type: string
+        reduce_only:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Position:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: BTCUSDT
+        side:
+          type: string
+          enum: [long, short]
+        size:
+          type: string
+          description: Open position size
+        entry_price:
+          type: string
+          description: Average entry price
+        mark_price:
+          type: string
+          description: Current mark price used for PnL calculation
+        liquidation_price:
+          type: string
+          description: Price at which the position would be liquidated
+        unrealised_pnl:
+          type: string
+        realised_pnl:
+          type: string
+        leverage:
+          type: integer
+        margin_mode:
+          type: string
+          enum: [cross, isolated]
+        take_profit:
+          type: string
+          nullable: true
+        stop_loss:
+          type: string
+          nullable: true
+        trailing_stop:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+
+    Balance:
+      type: object
+      properties:
+        asset:
+          type: string
+          example: USDT
+        total:
+          type: string
+          description: Total balance (available + locked)
+        available:
+          type: string
+          description: Balance free for new orders or withdrawals
+        locked:
+          type: string
+          description: Balance locked in open orders or positions
+
+    Ticker:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: BTCUSDT
+        last_price:
+          type: string
+        mark_price:
+          type: string
+        index_price:
+          type: string
+        price_change_24h:
+          type: string
+        price_change_pct_24h:
+          type: string
+        high_24h:
+          type: string
+        low_24h:
+          type: string
+        volume_24h:
+          type: string
+          description: Base asset volume
+        turnover_24h:
+          type: string
+          description: Quote asset volume (USDT)
+        funding_rate:
+          type: string
+          nullable: true
+          description: Current funding rate (perpetuals only)
+        next_funding_time:
+          type: integer
+          nullable: true
+          description: Unix ms timestamp of next funding settlement
+        open_interest:
+          type: string
+          nullable: true
+
+    OrderBook:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: BTCUSDT
+        bids:
+          type: array
+          description: Bid levels [price, qty], best bid first
+          items:
+            type: array
+            items:
+              type: string
+            minItems: 2
+            maxItems: 2
+          example: [["60000.00", "1.23"], ["59999.50", "0.50"]]
+        asks:
+          type: array
+          description: Ask levels [price, qty], best ask first
+          items:
+            type: array
+            items:
+              type: string
+            minItems: 2
+            maxItems: 2
+          example: [["60001.00", "0.87"], ["60001.50", "2.10"]]
+        sequence:
+          type: integer
+          description: Monotonically increasing sequence number for gap detection
+
+    Kline:
+      type: object
+      properties:
+        open_time:
+          type: integer
+          description: Candle open time (Unix ms)
+        open:
+          type: string
+        high:
+          type: string
+        low:
+          type: string
+        close:
+          type: string
+        volume:
+          type: string
+          description: Base asset volume
+        close_time:
+          type: integer
+          description: Candle close time (Unix ms)
+
+    Trade:
+      type: object
+      properties:
+        trade_id:
+          type: string
+        symbol:
+          type: string
+        side:
+          type: string
+          enum: [buy, sell]
+          description: Taker side
+        price:
+          type: string
+        qty:
+          type: string
+        timestamp:
+          type: integer
+          description: Unix ms

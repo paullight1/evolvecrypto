@@ -1,0 +1,37 @@
+{
+  "name": "exclip",
+  "version": "0.1.0",
+  "private": true,
+  "license": "Apache-2.0",
+  "type": "module",
+  "packageManager": "pnpm@12.6.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel --if-present run dev",
+    "build": "pnpm -r --if-present run build",
+    "start": "pnpm --filter @exclip/server run start",
+    "typecheck": "pnpm -r --if-present run typecheck",
+    "lint": "eslint .",
+    "test": "pnpm -r --if-present run test",
+    "brand": "node tools/brand/render.mjs",
+    "brand:outline": "node tools/brand/outline.mjs",
+    "contrast": "pnpm --filter @exclip/config run contrast",
+    "splitter-code": "pnpm --filter @exclip/config run splitter-code",
+    "screenshots": "node tools/screenshots/capture.mjs",
+    "docs:links": "node tools/docs/check-links.mjs"
+  },
+  "devDependencies": {
+    "@exclip/config": "workspace:*",
+    "@eslint/js": "^10.0.0",
+    "@fontsource/inter": "5.3.0",
+    "@resvg/resvg-js": "2.6.2",
+    "eslint": "^10.13.0",
+    "globals": "^16.5.0",
+    "opentype.js": "1.3.4",
+    "playwright": "1.64.1",
+    "typescript": "catalog:",
+    "typescript-eslint": "^8.46.0"
+  }
+}

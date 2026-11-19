@@ -1,0 +1,6 @@
+/* === TRANSITION TOKENS === */
+:root {
+  --transition-fast:   0.15s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow:   0.3s ease;
+}

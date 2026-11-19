@@ -1,0 +1,67 @@
+{{define "head"}}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {{if .MetaRefresh}}<meta http-equiv="refresh" content="{{.MetaRefresh}}">{{end}}
+  {{if .NoIndex}}<meta name="robots" content="noindex, nofollow">{{end}}
+  {{if .Description}}<meta name="description" content="{{.Description}}">{{end}}
+  <title>{{.Title}} — uSwap Zero</title>
+  <link rel="stylesheet" href="/static/style.css?v={{.CommitHash}}">
+  <style>:root{--accent:{{.ToColor}};--accent-a:{{.ToColorA}};--amber:{{.FromColor}};--amber-a:{{.FromColorA}}}</style>
+  <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+  <link rel="apple-touch-icon" href="/static/apple-touch-icon.png">
+  {{if .CanonicalPath}}<link rel="canonical" href="https://zero.uswap.net{{.CanonicalPath}}">{{end}}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="uSwap Zero">
+  <meta property="og:title" content="{{.Title}} — uSwap Zero">
+  {{if .Description}}<meta property="og:description" content="{{.Description}}">{{end}}
+  {{if .CanonicalPath}}<meta property="og:url" content="https://zero.uswap.net{{.CanonicalPath}}">{{end}}
+  <meta property="og:image" content="https://zero.uswap.net/static/apple-touch-icon.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{.Title}} — uSwap Zero">
+  {{if .Description}}<meta name="twitter:description" content="{{.Description}}">{{end}}
+  <meta name="twitter:image" content="https://zero.uswap.net/static/apple-touch-icon.png">
+  {{if .StructuredData}}{{.StructuredData}}{{end}}
+</head>
+<body>
+<div class="page-wrapper">
+{{end}}
+
+{{define "footer"}}
+<footer class="site-footer">
+  <nav class="footer-nav">
+    <a href="https://uswap.net" target="_blank" rel="noopener">Full Version</a>
+    <span class="footer-dot">&middot;</span>
+    <a href="/currencies">Currencies</a>
+    <span class="footer-dot">&middot;</span>
+    <a href="/how-it-works">How it Works</a>
+    <span class="footer-dot">&middot;</span>
+    <a href="/fees">Fees</a>
+    <span class="footer-dot">&middot;</span>
+    <a href="/case-study">Case Study</a>
+    <span class="footer-dot">&middot;</span>
+    <a href="/faq">FAQ</a>
+    <span class="footer-dot">&middot;</span>
+    <a href="/verify">Verify</a>
+    <span class="footer-dot">&middot;</span>
+    <a href="/source">Source</a>
+    <span class="footer-dot">&middot;</span>
+    <a href="https://t.me/uSwapZero" target="_blank" rel="noopener">Telegram</a>
+    <span class="footer-dot">&middot;</span>
+    <a href="/privacy">Privacy</a>
+    <span class="footer-dot">&middot;</span>
+    <a href="/terms">Terms</a>
+  </nav>
+  {{if .OnionURL}}<p class="footer-onion">Also on Tor: <a href="{{.OnionURL}}">{{.OnionURL}}</a></p>{{end}}
+  <p class="footer-powered">Powered by <a href="https://defuse.org/">NEAR Intents</a> (0% commissions)</p>
+  <p class="footer-license">Open source. MIT License.</p>
+  {{if and .CommitHash (ne .CommitHash "development") (ne .CommitHash "unknown") (ne .CommitHash "")}}
+  <p class="footer-build"><a href="https://github.com/uSwapExchange/zero/commit/{{.CommitHash}}">{{slice .CommitHash 0 7}}</a>{{if and .BuildTime (ne .BuildTime "unknown")}} &middot; {{.BuildTime}}{{end}}</p>
+  {{end}}
+</footer>
+</div>
+</body>
+</html>
+{{end}}

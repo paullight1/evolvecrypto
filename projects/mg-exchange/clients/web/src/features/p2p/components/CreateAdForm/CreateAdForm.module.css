@@ -1,0 +1,4 @@
+.form { display: flex; flex-direction: column; gap: var(--pad-lg); max-width: 640px; }
+.row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--pad); }
+.methodsLabel { margin: 0 0 var(--pad-sm); font-size: var(--text-sm); color: var(--text-1); }
+.methods { display: flex; flex-wrap: wrap; gap: var(--pad); }

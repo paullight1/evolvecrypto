@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+  max-width: 480px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pad);
+}
+
+.rateCard {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rateRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rateLabel {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.rateValue {
+  font-size: var(--text-sm);
+  color: var(--text-0);
+  font-family: var(--font-data);
+}

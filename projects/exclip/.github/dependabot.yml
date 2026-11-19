@@ -1,0 +1,32 @@
+version: 2
+updates:
+  # pnpm workspace (package.json files and pnpm-lock.yaml).
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    # Let a release age before proposing it, as pnpm-workspace.yaml's minimumReleaseAge does for installs.
+    cooldown:
+      default-days: 3
+    open-pull-requests-limit: 10
+    # Minor and patch updates come grouped: one pull request for the dependencies the apps ship, one for the tooling.
+    # A major update is in neither group, so each comes in a pull request of its own.
+    groups:
+      runtime:
+        dependency-type: production
+        update-types: [minor, patch]
+      dev-tooling:
+        dependency-type: development
+        update-types: [minor, patch]
+
+  # Actions in .github/workflows, pinned by commit SHA with the tag in a comment.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 3
+    # Every action update in one pull request, majors included.
+    groups:
+      actions:
+        patterns: ["*"]

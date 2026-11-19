@@ -1,0 +1,78 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-sm);
+}
+
+.name {
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+}
+
+.stats {
+  display: flex;
+  gap: var(--pad-lg);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xs);
+}
+
+.statLabel {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+}
+
+.statValue {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-0);
+}
+
+.positive {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-long);
+}
+
+.negative {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--color-short);
+}
+
+.neutral {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-1);
+}
+
+.empty {
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  padding: var(--pad-lg) 0;
+}

@@ -1,0 +1,83 @@
+.wrapper {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+}
+
+.thead {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--bg-2);
+}
+
+.th {
+  padding: 6px var(--pad-sm);
+  text-align: left;
+  color: var(--text-2);
+  font-weight: var(--font-medium);
+  border-bottom: 1px solid var(--border-1);
+  white-space: nowrap;
+}
+
+.th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.th.sortable:hover {
+  color: var(--text-1);
+}
+
+.sortIcon {
+  color: var(--text-3);
+  font-size: var(--text-xs);
+}
+
+.tr {
+  border-bottom: 1px solid var(--border-0);
+  transition: background 0.1s;
+}
+
+.tr:hover {
+  background: var(--bg-3);
+}
+
+.tr.clickable {
+  cursor: pointer;
+}
+
+.td {
+  padding: 6px var(--pad-sm);
+  color: var(--text-1);
+  white-space: nowrap;
+}
+
+.skeletonRow .td {
+  padding: var(--pad-sm) var(--pad-sm);
+}
+
+.empty {
+  padding: var(--pad-xl);
+  text-align: center;
+  color: var(--text-3);
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.align-center {
+  text-align: center;
+}

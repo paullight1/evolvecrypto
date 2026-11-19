@@ -1,0 +1,189 @@
+/* === Steps / Stepper === */
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---- Horizontal layout ---- */
+.horizontal {
+  display: flex;
+  align-items: flex-start;
+}
+
+.horizontal .step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.horizontal .circleRow {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.horizontal .circle {
+  flex-shrink: 0;
+}
+
+.horizontal .connector {
+  flex: 1;
+  height: 2px;
+  margin: 0 4px;
+}
+
+.horizontal .labelGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--pad-xs);
+  text-align: center;
+  padding: 0 var(--pad-xs);
+}
+
+/* ---- Vertical layout ---- */
+.vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical .step {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--pad-sm);
+}
+
+.vertical .circleRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.vertical .connector {
+  width: 2px;
+  flex: 1;
+  min-height: 24px;
+  margin: 4px 0;
+}
+
+.vertical .labelGroup {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--pad-lg);
+  padding-top: 4px; /* vertically center with circle */
+}
+
+/* ---- Circle ---- */
+.circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-data);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  line-height: 1;
+}
+
+.circle-completed {
+  background: var(--accent);
+  color: var(--on-accent);
+  border: 2px solid var(--accent);
+}
+
+.circle-active {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+}
+
+.circle-pending {
+  background: var(--bg-4);
+  border: 2px solid transparent;
+  color: var(--text-3);
+}
+
+.check {
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+}
+
+.number {
+  font-size: var(--text-sm);
+}
+
+/* ---- Connector lines ---- */
+.connectorDone {
+  background: var(--accent);
+}
+
+.connectorPending {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--border-1);
+}
+
+/* Horizontal connector is a block element (height set in layout) */
+.horizontal .connectorDone {
+  background: var(--accent);
+  border: none;
+}
+
+.horizontal .connectorPending {
+  background: none;
+  border-top: 2px dashed var(--border-1);
+  height: 0;
+  margin-top: 0;
+}
+
+/* Vertical connector */
+.vertical .connectorDone {
+  background: var(--accent);
+  border: none;
+}
+
+.vertical .connectorPending {
+  background: none;
+  border-left: 2px dashed var(--border-1);
+  width: 0;
+  margin-left: 0;
+}
+
+/* ---- Labels ---- */
+.label {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  white-space: nowrap;
+}
+
+.label-completed {
+  color: var(--text-2);
+  font-weight: var(--font-normal);
+}
+
+.label-active {
+  color: var(--text-0);
+  font-weight: var(--font-semibold);
+}
+
+.label-pending {
+  color: var(--text-2);
+  font-weight: var(--font-normal);
+}
+
+.description {
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+  color: var(--text-3);
+  margin-top: 2px;
+  white-space: nowrap;
+}

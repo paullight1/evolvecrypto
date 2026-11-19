@@ -1,0 +1,170 @@
+.page {
+  padding: var(--pad-lg);
+  max-width: 760px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+}
+
+.postForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+.textarea {
+  width: 100%;
+  min-height: 80px;
+  background: var(--bg-2);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius-sm);
+  padding: var(--pad-sm);
+  color: var(--text-0);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  resize: vertical;
+}
+
+.textarea:focus { outline: none; border-color: var(--accent); }
+
+.postActions { display: flex; justify-content: flex-end; }
+
+.feed { display: flex; flex-direction: column; gap: var(--pad-sm); }
+
+.post {
+  background: var(--bg-1);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius);
+  padding: var(--pad);
+}
+
+.postHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--pad-sm);
+}
+
+.postAuthor { font-size: var(--text-sm); font-weight: var(--font-bold); color: var(--text-0); }
+.postTime { font-size: var(--text-xs); color: var(--text-2); }
+.postBody { font-size: var(--text-sm); color: var(--text-1); margin-bottom: var(--pad-sm); }
+
+.postFooter {
+  display: flex;
+  gap: var(--pad);
+}
+
+.postAction {
+  background: none;
+  border: none;
+  font-size: var(--text-xs);
+  color: var(--text-2);
+  cursor: pointer;
+  padding: 0;
+}
+
+.postAction:hover { color: var(--text-0); }
+
+.authorLink {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-xs);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.authorLink:hover .postAuthor { color: var(--accent); }
+
+/* Comment thread */
+.commentThread {
+  margin-top: var(--pad-sm);
+  padding-top: var(--pad-sm);
+  border-top: 1px solid var(--border-0);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-xs);
+}
+
+.comment {
+  display: flex;
+  gap: var(--pad-xs);
+  align-items: baseline;
+  font-size: var(--text-xs);
+}
+
+.commentAuthor {
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+  flex-shrink: 0;
+}
+
+.commentBody { color: var(--text-1); }
+.commentTime { color: var(--text-3); flex-shrink: 0; margin-left: auto; }
+.commentLoading { font-size: var(--text-xs); color: var(--text-2); }
+.commentEmpty { font-size: var(--text-xs); color: var(--text-3); text-align: center; }
+
+.commentForm {
+  display: flex;
+  gap: var(--pad-xs);
+  align-items: center;
+  margin-top: var(--pad-xs);
+}
+
+.commentInput {
+  flex: 1;
+  background: var(--bg-2);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius-sm);
+  padding: var(--pad-2xs) var(--pad-xs);
+  color: var(--text-0);
+  font-family: var(--font-ui);
+  font-size: var(--text-xs);
+}
+
+.commentInput:focus { outline: none; border-color: var(--accent); }
+
+/* Trader Profile */
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--pad);
+  margin-bottom: var(--pad);
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--bg-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: var(--font-bold);
+  color: var(--accent);
+}
+
+.profileName { font-size: var(--text-lg); font-weight: var(--font-bold); color: var(--text-0); }
+.profileBio { font-size: var(--text-sm); color: var(--text-2); }
+
+.profileStats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--pad-sm);
+  margin-bottom: var(--pad);
+}
+
+.profileStat { text-align: center; }
+.profileStatLabel { font-size: var(--text-xs); color: var(--text-2); }
+.profileStatValue { font-size: var(--text-md); font-weight: var(--font-bold); color: var(--text-0); font-family: var(--font-data); }

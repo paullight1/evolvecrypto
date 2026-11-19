@@ -1,0 +1,29 @@
+.card {
+  max-width: 360px;
+}
+
+.title {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-1);
+  margin: 0 0 var(--pad-sm) 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+.error {
+  font-size: var(--text-xs);
+  color: var(--sell);
+  margin: 0;
+}
+
+.empty {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  margin: 0;
+}

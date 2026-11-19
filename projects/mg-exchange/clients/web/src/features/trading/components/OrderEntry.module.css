@@ -1,0 +1,571 @@
+/* ========================================================
+   OrderEntry — CSS Module
+   Compact layout, fits in 320px right panel.
+   Uses design tokens from styles/tokens/*.css
+   ======================================================== */
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-1);
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* ---- Side buttons ---- */
+
+.sideRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex-shrink: 0;
+}
+
+.sideBtn {
+  height: 36px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: background 0.15s, opacity 0.15s;
+  opacity: 0.75;
+  border-radius: 0;
+}
+
+.sideBtnBuy {
+  background: var(--long-bg);
+  color: var(--long);
+}
+
+.sideBtnBuyActive {
+  background: var(--long);
+  color: var(--on-accent);
+  border-bottom-color: color-mix(in srgb, var(--long) 60%, transparent);
+  opacity: 1;
+}
+
+.sideBtnSell {
+  background: var(--short-bg);
+  color: var(--short);
+}
+
+.sideBtnSellActive {
+  background: var(--short);
+  color: var(--on-short);
+  border-bottom-color: color-mix(in srgb, var(--short) 60%, transparent);
+  opacity: 1;
+}
+
+/* ---- Order type tabs ---- */
+
+.typeTabs {
+  display: flex;
+  border-bottom: 1px solid var(--border-1);
+  flex-shrink: 0;
+}
+
+.typeTab {
+  flex: 1;
+  padding: 8px 4px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  margin-bottom: -1px;
+}
+
+.typeTab:hover {
+  color: var(--text-1);
+}
+
+.typeTabActive {
+  color: var(--text-0);
+  border-bottom-color: var(--accent);
+}
+
+/* ---- Time in force ---- */
+
+.tifRow {
+  display: flex;
+  gap: 2px;
+  padding: 4px var(--pad-sm);
+  flex-shrink: 0;
+}
+
+.tifBtn {
+  flex: 1;
+  padding: 3px 4px;
+  background: var(--bg-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+.tifBtn:hover {
+  color: var(--text-1);
+  background: var(--bg-4);
+}
+
+.tifBtnActive {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+/* ---- Trailing stop ---- */
+
+.trailTypeToggle {
+  display: inline-flex;
+  gap: 2px;
+  margin-left: 6px;
+}
+
+.trailTypeBtn {
+  padding: 0 5px;
+  background: var(--bg-3);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  cursor: pointer;
+  line-height: 16px;
+}
+
+.trailTypeBtnActive {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.inputSuffix {
+  padding: 0 8px;
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+/* ---- Margin mode + leverage row ---- */
+
+.marginRow {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-sm);
+  padding: var(--pad-sm);
+  border-bottom: 1px solid var(--border-0);
+  flex-shrink: 0;
+}
+
+.marginToggle {
+  display: flex;
+  gap: 2px;
+}
+
+.marginBtn {
+  padding: 3px 8px;
+  background: transparent;
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.marginBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.marginBtnActive {
+  background: var(--bg-3);
+  color: var(--text-0);
+  border-color: var(--border-2);
+}
+
+.leverageWrap {
+  position: relative;
+  margin-left: auto;
+}
+
+.leverageBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.leverageBtn:hover {
+  border-color: var(--accent);
+}
+
+.leveragePopup {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 200;
+  background: var(--bg-4);
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  padding: var(--pad-sm);
+  width: 200px;
+  box-shadow: var(--shadow-lg);
+}
+
+.leverageLabel {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+
+.leverageValue {
+  color: var(--accent);
+  font-weight: var(--font-medium);
+}
+
+.leverageSlider {
+  width: 100%;
+  margin-bottom: 8px;
+  accent-color: var(--accent);
+}
+
+.leverageTicks {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.leverageTick {
+  flex: 1;
+  padding: 2px 4px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.leverageTick:hover {
+  color: var(--text-0);
+  border-color: var(--border-2);
+}
+
+.leverageTickActive {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ---- Tier info popover ---- */
+
+.tierInfoWrap {
+  position: relative;
+}
+
+.tierInfoBtn {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-full);
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: var(--font-bold);
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tierInfoBtn:hover {
+  color: var(--text-0);
+  border-color: var(--border-2);
+}
+
+.tierInfoPopover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 200;
+  background: var(--bg-4);
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  padding: var(--pad-sm);
+  width: 280px;
+  box-shadow: var(--shadow-lg);
+}
+
+/* ---- Form ---- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+  padding: var(--pad-sm);
+  flex: 1;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.labelAvail {
+  font-size: 10px;
+  color: var(--text-3);
+}
+
+.inputWrap {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 10px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  color: var(--text-0);
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.inputWrap .input {
+  border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.inputTp:focus {
+  border-color: var(--long);
+}
+
+.inputSl:focus {
+  border-color: var(--short);
+}
+
+/* Input outside an inputWrap (TP/SL standalone) */
+.tpslRow .input {
+  border-radius: var(--radius-sm);
+}
+
+.bestBtn {
+  padding: 6px 10px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-left: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+
+.bestBtn:hover {
+  background: var(--bg-4);
+  color: var(--text-0);
+}
+
+/* ---- Market info ---- */
+
+.marketInfo {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  padding: 4px 0;
+}
+
+.bidPrice {
+  color: var(--long);
+  font-family: var(--font-mono);
+}
+
+.askPrice {
+  color: var(--short);
+  font-family: var(--font-mono);
+}
+
+/* ---- % buttons ---- */
+
+.pctRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.pctBtn {
+  padding: 4px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.pctBtn:hover {
+  background: var(--bg-4);
+  color: var(--text-1);
+}
+
+/* ---- Estimated cost ---- */
+
+.costRow {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.costVal {
+  font-family: var(--font-mono);
+  color: var(--text-1);
+}
+
+/* ---- TP/SL row ---- */
+
+.tpslRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--pad-sm);
+}
+
+
+/* ---- Order preview calc ---- */
+
+.orderCalc {
+  background: var(--bg-3);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.calcRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+
+.calcMono {
+  font-family: var(--font-mono);
+  color: var(--text-1);
+}
+
+.calcProfit {
+  color: var(--long);
+}
+
+.calcLoss {
+  color: var(--short);
+}
+
+.calcHint {
+  cursor: help;
+}
+
+.calcEst {
+  font-size: 10px;
+  color: var(--text-3);
+}
+
+/* ---- Submit button ---- */
+
+.submitBtn {
+  margin-top: 4px;
+}
+
+/* ---- Keyboard shortcut hints ---- */
+
+.shortcutHints {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+.shortcutHint {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--text-3);
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.kbd {
+  display: inline-block;
+  padding: 1px 4px;
+  background: var(--bg-3);
+  border: 1px solid var(--border-2);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-2);
+  line-height: 1.4;
+}

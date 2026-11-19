@@ -1,0 +1,4 @@
+.form { display: flex; flex-direction: column; gap: var(--pad); }
+.meta { display: flex; flex-direction: column; gap: var(--pad-sm); background: var(--bg-1); border-radius: var(--radius); padding: var(--pad); }
+.metaRow { display: flex; justify-content: space-between; font-size: var(--text-sm); color: var(--text-1); }
+.estimate { margin: 0; font-size: var(--text-sm); color: var(--text-1); }

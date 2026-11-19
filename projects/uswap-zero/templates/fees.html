@@ -1,0 +1,98 @@
+{{template "head" .}}
+<div class="page-content page-content--wide">
+
+  <a href="/" class="back-link">&larr; Back to Swap</a>
+
+  <div class="article-header">
+    <h1>Fees</h1>
+    <p>uSwap Zero does not add an app fee. Here's what the quote includes.</p>
+  </div>
+
+  <div class="fee-hero glass-card mb-24">
+    <div class="fee-hero__amount">$0</div>
+    <div class="fee-hero__label">uSwap Zero app fee</div>
+  </div>
+
+  <div class="article-section">
+    <h2>Fee Breakdown</h2>
+    <div class="fee-card">
+      <div class="fee-row">
+        <span class="fee-row__label">uSwap app fee</span>
+        <span class="fee-row__value fee-row__value--free"><span class="fee-zero">$0</span></span>
+      </div>
+      <div class="fee-row">
+        <span class="fee-row__label">uSwap commission</span>
+        <span class="fee-row__value fee-row__value--free"><span class="fee-zero">$0</span></span>
+      </div>
+      <div class="fee-row">
+        <span class="fee-row__label">uSwap rate adjustment</span>
+        <span class="fee-row__value fee-row__value--free"><span class="fee-zero">$0</span></span>
+      </div>
+      <div class="fee-row fee-row--total">
+        <span class="fee-row__label">Market maker spread</span>
+        <span class="fee-row__value">~0.1&ndash;0.5%</span>
+      </div>
+      <p class="fee-note">The spread is the natural difference between a market maker's buy and sell price. Protocol or network costs may also apply when surfaced by NEAR Intents.</p>
+    </div>
+  </div>
+
+  <div class="article-section">
+    <h2>How We Compare</h2>
+    <p>Some swap frontends add an app fee on top of the market maker spread. The comparison below uses public pricing, fee disclosures, and the case-study summary data.</p>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>App Fee</th>
+          <th>Tracking</th>
+          <th>Open Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>uSwap Zero</strong></td>
+          <td class="highlight">0%</td>
+          <td class="highlight">None</td>
+          <td class="highlight">Yes</td>
+        </tr>
+        <tr>
+          <td>ChangeNow</td>
+          <td>0.25&ndash;0.5%</td>
+          <td>Full analytics</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>SimpleSwap</td>
+          <td>~0.5%</td>
+          <td>Full analytics</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>StealthEX</td>
+          <td>0.5&ndash;1%</td>
+          <td>Full analytics</td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td>Swap.my</td>
+          <td>0.72%</td>
+          <td>Unknown</td>
+          <td>No</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>The <a href="/case-study">case study</a> summarizes app-fee examples from public NEAR Intents transaction data.</p>
+  </div>
+
+  <div class="article-section">
+    <h2>Why No App Fee?</h2>
+    <p>uSwap Zero is open-source software that sends NEAR Intents quote requests with <code>appFees: []</code>. The app does not set a fee recipient or add its own commission.</p>
+    <p>Every swap path is verifiable. The source code is public, and any change to the fee behavior would be visible in the code.</p>
+  </div>
+
+  <div class="text-center mt-32 mb-24">
+    <a href="/" class="btn btn--primary">Start a Swap &rarr;</a>
+  </div>
+
+</div>
+{{template "footer" .}}

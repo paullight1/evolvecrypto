@@ -1,0 +1,96 @@
+.page {
+  padding: var(--pad-lg);
+  max-width: 900px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--text-0);
+  margin-bottom: var(--pad);
+}
+
+.subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  margin-bottom: var(--pad-lg);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+  max-width: 480px;
+}
+
+.formRow { display: flex; gap: var(--pad-sm); align-items: flex-end; }
+
+.toggleGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad-sm);
+}
+
+.toggleItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--pad);
+  background: var(--bg-1);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius-sm);
+}
+
+
+
+.achievementGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--pad-sm);
+}
+
+.achievementCard {
+  text-align: center;
+  padding: var(--pad);
+  background: var(--bg-1);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius);
+}
+
+.achievementIcon { font-size: 2rem; margin-bottom: var(--pad-sm); }
+.achievementName { font-size: var(--text-sm); font-weight: var(--font-bold); color: var(--text-0); margin-bottom: 4px; }
+.achievementDesc { font-size: var(--text-xs); color: var(--text-2); margin-bottom: var(--pad-sm); }
+.achievementLocked { opacity: 0.4; filter: grayscale(1); }
+
+
+.rewardSection { margin-bottom: var(--pad); }
+.sectionTitle { font-size: var(--text-sm); font-weight: var(--font-bold); color: var(--text-1); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: var(--pad-sm); }
+
+.campaignCard {
+  background: var(--bg-1);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius);
+  padding: var(--pad);
+  margin-bottom: var(--pad-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.campaignInfo { flex: 1; }
+.campaignName { font-size: var(--text-sm); font-weight: var(--font-bold); color: var(--text-0); }
+.campaignDesc { font-size: var(--text-xs); color: var(--text-2); }
+
+.giftCardGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--pad-sm); margin-bottom: var(--pad); }
+.giftCard {
+  background: var(--bg-1);
+  border: 1px solid var(--border-0);
+  border-radius: var(--radius);
+  padding: var(--pad);
+  text-align: center;
+}
+.giftAmount { font-size: var(--text-lg); font-weight: var(--font-bold); color: var(--accent); font-family: var(--font-data); }
+.giftCode { font-size: var(--text-xs); color: var(--text-2); font-family: var(--font-data); }

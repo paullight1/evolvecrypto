@@ -1,0 +1,9 @@
+.wrap { display: flex; flex-direction: column; gap: var(--pad-lg); }
+.statsGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--pad); }
+.statCard { display: flex; flex-direction: column; gap: var(--pad-sm); }
+.label { margin: 0; font-size: var(--text-sm); color: var(--text-2); }
+.value { margin: 0; font-size: var(--text-lg); font-weight: var(--font-bold); color: var(--text-0); }
+.utilTitle { margin: 0 0 var(--pad); font-size: var(--text-base); font-weight: var(--font-semibold); color: var(--text-0); }
+.utilities { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--pad-sm); }
+.utilItem { display: flex; align-items: flex-start; gap: var(--pad-sm); font-size: var(--text-sm); color: var(--text-1); }
+.bullet { color: var(--accent); flex-shrink: 0; }

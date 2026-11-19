@@ -1,0 +1,72 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--pad-sm);
+}
+
+.symbol {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-0);
+}
+
+.pnlRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--pad-sm);
+}
+
+.pnlLabel {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+}
+
+.pnlPositive {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--color-long);
+}
+
+.pnlNegative {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--color-short);
+}
+
+.pnlNeutral {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text-1);
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.date {
+  font-size: var(--text-xs);
+  color: var(--text-2);
+}
+
+.actions {
+  display: flex;
+  gap: var(--pad-sm);
+}

@@ -1,0 +1,7 @@
+BEGIN;
+
+ALTER TABLE user_stats 
+ADD COLUMN avg_payment_time INT NOT NULL DEFAULT 0,
+ADD COLUMN avg_release_time INT NOT NULL DEFAULT 0;
+
+COMMIT;

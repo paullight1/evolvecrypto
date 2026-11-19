@@ -1,0 +1,21 @@
+[package]
+name = "exchange-index-price"
+version.workspace = true
+edition.workspace = true
+
+[features]
+default = []
+live-feeds = ["dep:tokio-tungstenite", "dep:futures-util"]
+
+[dependencies]
+exchange-common = { workspace = true }
+rust_decimal = { workspace = true }
+rust_decimal_macros = "1"
+chrono = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true }
+tokio-tungstenite = { version = "0.26", features = ["native-tls"], optional = true }
+futures-util = { version = "0.3", optional = true }

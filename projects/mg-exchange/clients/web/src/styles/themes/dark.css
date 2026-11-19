@@ -1,0 +1,7 @@
+/* === DARK THEME (default) === */
+/* Token values are already set in :root via tokens/colors.css.
+   This file is the explicit dark theme declaration for clarity
+   and serves as the reference when toggling themes at runtime. */
+:root {
+  color-scheme: dark;
+}

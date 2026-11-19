@@ -1,0 +1,383 @@
+{{template "head" .}}
+<div class="page-content page-content--wide">
+
+  <a href="/" class="back-link">&larr; Start Swapping</a>
+
+  <section class="full-app-cta">
+    <span class="full-app-cta__eyebrow">Full Version</span>
+    <h2 class="full-app-cta__title">Try the full version and swap <em>@ 0% Fees</em> today.</h2>
+    <a href="https://app.uswap.net/" class="btn btn--primary full-app-cta__btn">Open App &rarr;</a>
+  </section>
+
+  <div class="article-header">
+    <h1>Swap Fee Transparency</h1>
+    <p>What other NEAR Intents frontends charged — measured from public on-chain data.</p>
+  </div>
+
+  <!-- Background -->
+  <div class="article-section">
+    <h2>Background</h2>
+    <p>NEAR Intents is a cross-chain swap protocol. It aggregates liquidity from competing market makers and executes swaps across 20+ blockchains. For registered partners, app-level fees are represented explicitly in the quote request and resulting transaction data.</p>
+    <p>Several public swap frontends use NEAR Intents infrastructure while applying their own app fee. Some disclose that fee directly; others expose it only through the effective exchange rate or public transaction metadata.</p>
+    <p>The numbers below come from the public <code>appFees</code> fields for the listed fee recipients. uSwap Zero sends quote requests with <code>appFees: []</code>.</p>
+  </div>
+
+  <!-- SwapMy -->
+  <div class="article-section">
+    <h2>Swap.my <span class="text-muted">(swap.my)</span></h2>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-card__value">{{.SwapMy.TotalSwaps}}</div>
+        <div class="stat-card__label">Successful Swaps</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value">{{.SwapMy.TotalVolume}}</div>
+        <div class="stat-card__label">Total Volume</div>
+      </div>
+      <div class="stat-card stat-card--accent">
+        <div class="stat-card__value">{{.SwapMy.TotalRevenue}}</div>
+        <div class="stat-card__label">App Fees Collected</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value">0.72%</div>
+        <div class="stat-card__label">App Fee (72 bps)</div>
+      </div>
+    </div>
+
+    <div class="evidence-block">
+      <div class="evidence-block__title">On-Chain Fee Recipient</div>
+      <pre><code>appFees: [{
+  "recipient": "swapmybuddy.near",
+  "fee": 72
+}]</code></pre>
+      <p class="evidence-block__caption">The sampled Swap.my transactions contain this fee entry. 72 basis points equals 0.72% of the swap input value.</p>
+    </div>
+
+    <table class="comparison-table">
+      <thead>
+        <tr><th>Metric</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Fee Wallet</td><td><code>swapmybuddy.near</code></td></tr>
+        <tr><td>Fee Rate</td><td>72 bps (0.72%) per swap</td></tr>
+        <tr><td>Active Since</td><td>{{.SwapMy.FirstTx}}</td></tr>
+        <tr><td>Days Active</td><td>{{.SwapMy.DaysActive}} days</td></tr>
+        <tr><td>Total Swaps</td><td>{{.SwapMy.TotalSwaps}}</td></tr>
+        <tr><td>Total Volume</td><td>{{.SwapMy.TotalVolume}}</td></tr>
+        <tr><td>App Fees Collected</td><td>{{.SwapMy.TotalRevenue}}</td></tr>
+        <tr><td>Daily Revenue</td><td>{{.SwapMy.DailyRevenue}}/day</td></tr>
+        <tr><td>Unique Users (senders)</td><td>{{.SwapMy.UniqueSenders}}</td></tr>
+        <tr><td>Largest Single Swap</td><td>{{.SwapMy.BiggestUSD}}</td></tr>
+        <tr><td>Referral Tag</td><td>None set (no attribution to NEAR Intents)</td></tr>
+        <tr><td>Provider Field</td><td>Listed as "A" in the sampled API response</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Quote Discrepancy</h3>
+    <p>In one test quote, Swap.my returned <code>0.748856 USDT</code> for a 0.01 SOL swap. The NEAR Intents Explorer showed the solver fill at <code>0.749848 USDT</code>. The difference is small on a sub-dollar swap, but it illustrates where rate-level app fees show up.</p>
+  </div>
+
+  <!-- LizardSwap -->
+  <div class="article-section">
+    <h2>LizardSwap <span class="text-muted">(lizardswap.com)</span></h2>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-card__value">{{.Lizard.TotalSwaps}}</div>
+        <div class="stat-card__label">Successful Swaps</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value">{{.Lizard.TotalVolume}}</div>
+        <div class="stat-card__label">Total Volume</div>
+      </div>
+      <div class="stat-card stat-card--accent">
+        <div class="stat-card__value">{{.Lizard.TotalRevenue}}</div>
+        <div class="stat-card__label">App Fees Collected</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value">0.30%</div>
+        <div class="stat-card__label">Fee (30 bps)</div>
+      </div>
+    </div>
+
+    <div class="evidence-block">
+      <div class="evidence-block__title">On-Chain Fee Recipient</div>
+      <pre><code>appFees: [{
+  "recipient": "trustswap.near",
+  "fee": 30
+}]</code></pre>
+      <p class="evidence-block__caption">The sampled LizardSwap transactions contain this fee entry. 30 basis points equals 0.30% of the swap input value.</p>
+    </div>
+
+    <table class="comparison-table">
+      <thead>
+        <tr><th>Metric</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Fee Wallet</td><td><code>trustswap.near</code></td></tr>
+        <tr><td>Fee Rate</td><td>30 bps (0.30%) per swap</td></tr>
+        <tr><td>Active Since</td><td>{{.Lizard.FirstTx}}</td></tr>
+        <tr><td>Days Active</td><td>{{.Lizard.DaysActive}} days</td></tr>
+        <tr><td>Total Swaps</td><td>{{.Lizard.TotalSwaps}}</td></tr>
+        <tr><td>Total Volume</td><td>{{.Lizard.TotalVolume}}</td></tr>
+        <tr><td>App Fees Collected</td><td>{{.Lizard.TotalRevenue}}</td></tr>
+        <tr><td>Daily Revenue</td><td>{{.Lizard.DailyRevenue}}/day</td></tr>
+        <tr><td>Unique Users (senders)</td><td>{{.Lizard.UniqueSenders}}</td></tr>
+        <tr><td>Largest Single Swap</td><td>{{.Lizard.BiggestUSD}}</td></tr>
+        <tr><td>Referral Tag</td><td>None set (no attribution to NEAR Intents)</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <!-- EagleSwap -->
+  <div class="article-section">
+    <h2>EagleSwap <span class="text-muted">(eagleswap.to)</span></h2>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-card__value">{{.Eagle.TotalSwaps}}</div>
+        <div class="stat-card__label">Successful Swaps</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value">{{.Eagle.TotalVolume}}</div>
+        <div class="stat-card__label">Total Volume</div>
+      </div>
+      <div class="stat-card stat-card--accent">
+        <div class="stat-card__value">{{.Eagle.TotalRevenue}}</div>
+        <div class="stat-card__label">App Fees Collected</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value">0.30%</div>
+        <div class="stat-card__label">Fee (30 bps)</div>
+      </div>
+    </div>
+
+    <div class="evidence-block">
+      <div class="evidence-block__title">On-Chain Fee Recipient</div>
+      <pre><code>appFees: [{
+  "recipient": "Gcj5A3a5mF2BEPm4LujddTit7tTR8pNmUKXkcuzM4dC1",
+  "fee": 30
+}]</code></pre>
+      <p class="evidence-block__caption">The sampled EagleSwap transactions contain this fee entry. 30 basis points equals 0.30% of the swap input value. Transactions can be checked at <a href="https://explorer.near-intents.org" class="text-accent">explorer.near-intents.org</a>.</p>
+    </div>
+
+    <table class="comparison-table">
+      <thead>
+        <tr><th>Metric</th><th>Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Fee Wallet</td><td><code>Gcj5A3a5mF2BEPm4LujddTit7tTR8pNmUKXkcuzM4dC1</code></td></tr>
+        <tr><td>Fee Rate</td><td>30 bps (0.30%) per swap</td></tr>
+        <tr><td>Active Since</td><td>{{.Eagle.FirstTx}}</td></tr>
+        <tr><td>Days Active</td><td>{{.Eagle.DaysActive}} days</td></tr>
+        <tr><td>Total Swaps</td><td>{{.Eagle.TotalSwaps}}</td></tr>
+        <tr><td>Total Volume</td><td>{{.Eagle.TotalVolume}}</td></tr>
+        <tr><td>App Fees Collected</td><td>{{.Eagle.TotalRevenue}}</td></tr>
+        <tr><td>Daily Revenue</td><td>{{.Eagle.DailyRevenue}}/day</td></tr>
+        <tr><td>Unique Users (senders)</td><td>{{.Eagle.UniqueSenders}}</td></tr>
+        <tr><td>Largest Single Swap</td><td>{{.Eagle.BiggestUSD}}</td></tr>
+        <tr><td>Referral Tag</td><td>None set (no attribution to NEAR Intents)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Public API Exposure</h3>
+    <p>EagleSwap exposes an unauthenticated API at <code>/api/swap/{id}</code> that returns:</p>
+    <ul>
+      <li>Full NEAR Intents quote responses including solver signatures</li>
+      <li>User wallet addresses (both recipient and refund)</li>
+      <li>Deposit addresses and correlation IDs</li>
+      <li>Recent swap feed at <code>/api/swaps</code> — no authentication required</li>
+    </ul>
+    <p>Any user's swap can be looked up by anyone who knows the order ID. This is how the fee structure was identified without privileged access.</p>
+  </div>
+
+  <!-- Side by Side -->
+  <div class="article-section">
+    <h2>Side-by-Side Comparison</h2>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Swap.my</th>
+          <th>LizardSwap</th>
+          <th>EagleSwap</th>
+          <th class="highlight">uSwap Zero</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Underlying Protocol</td>
+          <td>NEAR Intents</td>
+          <td>NEAR Intents</td>
+          <td>NEAR Intents</td>
+          <td class="highlight">NEAR Intents</td>
+        </tr>
+        <tr>
+          <td>Discloses Provider</td>
+          <td>No (lists as "A")</td>
+          <td>No</td>
+          <td>No</td>
+          <td class="highlight">Yes — on every page</td>
+        </tr>
+        <tr>
+          <td>Protocol Fee</td>
+          <td>0%</td>
+          <td>0%</td>
+          <td>0%</td>
+          <td class="highlight">0%</td>
+        </tr>
+        <tr>
+          <td>App Fee</td>
+          <td>0.72%</td>
+          <td>0.30%</td>
+          <td>0.30%</td>
+          <td class="highlight">0%</td>
+        </tr>
+        <tr>
+          <td>Fee Disclosure</td>
+          <td>Rate-level</td>
+          <td>Disclosed</td>
+          <td>Disclosed</td>
+          <td class="highlight">$0.00 shown explicitly</td>
+        </tr>
+        <tr>
+          <td>Total User Cost</td>
+          <td>~0.82%</td>
+          <td>~0.40%</td>
+          <td>~0.40%</td>
+          <td class="highlight">~0.05-0.15% (spread only)</td>
+        </tr>
+        <tr>
+          <td>Open Source</td>
+          <td>No</td>
+          <td>No</td>
+          <td>No</td>
+          <td class="highlight">Yes — MIT License</td>
+        </tr>
+        <tr>
+          <td>Verifiable Deploy</td>
+          <td>No</td>
+          <td>No</td>
+          <td>No</td>
+          <td class="highlight">Yes — reproducible builds</td>
+        </tr>
+        <tr>
+          <td>User Data Stored</td>
+          <td>Unknown</td>
+          <td>Unknown</td>
+          <td>Yes (available via API)</td>
+          <td class="highlight">Nothing. Zero state.</td>
+        </tr>
+        <tr>
+          <td>Client-Side JS</td>
+          <td>Yes (full SPA)</td>
+          <td>Yes (full SPA)</td>
+          <td>Yes (full SPA)</td>
+          <td class="highlight">None (server-rendered HTML)</td>
+        </tr>
+        <tr>
+          <td>Cost on $1,000 Swap</td>
+          <td>~$7.20</td>
+          <td>~$3.00</td>
+          <td>~$3.00</td>
+          <td class="highlight">$0.00</td>
+        </tr>
+        <tr>
+          <td>Cost on $10,000 Swap</td>
+          <td>~$72.00</td>
+          <td>~$30.00</td>
+          <td>~$30.00</td>
+          <td class="highlight">$0.00</td>
+        </tr>
+        <tr>
+          <td>Cost on $100,000 Swap</td>
+          <td>~$720.00</td>
+          <td>~$300.00</td>
+          <td>~$300.00</td>
+          <td class="highlight">$0.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Combined Stats -->
+  <div class="article-section">
+    <h2>Combined Impact</h2>
+    <div class="stats-grid stats-grid--wide">
+      <div class="stat-card stat-card--large">
+        <div class="stat-card__value">{{.Combined.TotalVolume}}</div>
+        <div class="stat-card__label">Combined Volume Processed</div>
+      </div>
+      <div class="stat-card stat-card--large stat-card--accent">
+        <div class="stat-card__value">{{.Combined.TotalRevenue}}</div>
+        <div class="stat-card__label">Total App Fees Collected</div>
+      </div>
+      <div class="stat-card stat-card--large">
+        <div class="stat-card__value">{{.Combined.TotalSwaps}}</div>
+        <div class="stat-card__label">Total Swaps Processed</div>
+      </div>
+      <div class="stat-card stat-card--large">
+        <div class="stat-card__value">{{.Combined.UniqueUsers}}</div>
+        <div class="stat-card__label">Unique Users Affected</div>
+      </div>
+    </div>
+    <p>The total above is the app-fee component visible in public NEAR Intents transaction data for the sampled fee recipients.</p>
+  </div>
+
+  <!-- How We Found This -->
+  <div class="article-section">
+    <h2>How We Found This</h2>
+    <p>No private access is required. The methodology uses public transaction records and public API responses.</p>
+    <ol>
+      <li><strong>Identified the protocol:</strong> The services use NEAR Intents-style asset IDs, signatures, and deposit flows.</li>
+      <li><strong>Identified fee recipients:</strong> Public transaction data shows app-fee recipients in the <code>appFees</code> field.</li>
+      <li><strong>Queried by affiliate:</strong> The NEAR Intents Explorer API supports filtering by <code>affiliate</code>, which is the fee recipient address.</li>
+      <li><strong>Summarized the results:</strong> The displayed totals are generated from the compact summary JSON embedded in this repository.</li>
+    </ol>
+
+    <div class="evidence-block">
+      <div class="evidence-block__title">Reproduce It Yourself</div>
+      <pre><code># Search the NEAR Intents Explorer for EagleSwap's fee wallet
+curl -H "Authorization: Bearer YOUR_JWT" \
+  "https://explorer.near-intents.org/api/v0/transactions-pages?\
+affiliate=Gcj5A3a5mF2BEPm4LujddTit7tTR8pNmUKXkcuzM4dC1&perPage=10"
+
+# Search for LizardSwap's fee wallet
+curl -H "Authorization: Bearer YOUR_JWT" \
+  "https://explorer.near-intents.org/api/v0/transactions-pages?\
+affiliate=trustswap.near&perPage=10"
+
+# Search for Swap.my's fee wallet
+curl -H "Authorization: Bearer YOUR_JWT" \
+  "https://explorer.near-intents.org/api/v0/transactions-pages?\
+affiliate=swapmybuddy.near&perPage=10"
+
+# Get an Explorer API key at: partners.near-intents.org</code></pre>
+      <p class="evidence-block__caption">Returns transaction details including hashes, amounts, fee fields, and timestamps.</p>
+    </div>
+
+    <div class="evidence-block">
+      <div class="evidence-block__title">Summary Data</div>
+      <p>The repository keeps only the compact summary used to render this page. Raw transaction exports are intentionally not checked in; they can be regenerated from the Explorer API queries above.</p>
+      <ul>
+        <li><a href="https://raw.githubusercontent.com/uSwapExchange/zero/main/data/near_intents_fee_analysis.json" class="text-accent">near_intents_fee_analysis.json</a> — Summary statistics</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- The Point -->
+  <div class="article-section">
+    <h2>Why This Matters</h2>
+    <p>App fees are a valid business model when they are clear to users. This comparison exists to make the fee surface easy to inspect.</p>
+    <p>uSwap Zero takes a different approach: it is open source, server-rendered, privacy-first, and sends quote requests without an app-fee recipient.</p>
+  </div>
+
+  <div class="text-center mt-32">
+    <a href="/" class="btn btn--primary">&larr; Start Swapping</a>
+    <a href="/verify" class="btn btn--outline">Verify Our Code &rarr;</a>
+  </div>
+
+</div>
+{{template "footer" .}}

@@ -1,0 +1,14 @@
+zero
+zero.exe
+uswap-zero
+uswap-zero.exe
+*.exe
+*.test
+coverage.out
+*~
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,146 @@
+/* === COLOR TOKENS — Obsidian Volt Brand === */
+:root {
+  /* Backgrounds (violet-grey tint, 240-250° hue) */
+  --bg-0: #09090b;
+  --bg-1: #0f0f13;
+  --bg-2: #161618;
+  --bg-3: #1e1e24;
+  --bg-4: #27272f;
+
+  /* Borders */
+  --border-0: rgba(255,255,255,0.04);
+  --border-1: rgba(255,255,255,0.08);
+  --border-2: rgba(255,255,255,0.12);
+
+  /* Text (warm white, zinc palette) */
+  --text-0: #f4f4f5;
+  --text-1: #a1a1aa;
+  --text-2: #71717a;
+  --text-3: #52525b;
+
+  /* Long (buy) — cool green, distinct from Binance */
+  --long:        #10b981;
+  --long-bg:     rgba(16,185,129,0.10);
+  --long-muted:  rgba(16,185,129,0.18);
+  --long-hover:  #059669;
+
+  /* Short (sell) — pure red, no pink drift */
+  --short:       #ef4444;
+  --short-bg:    rgba(239,68,68,0.10);
+  --short-muted: rgba(239,68,68,0.18);
+  --short-hover: #dc2626;
+
+  /* Accent — electric violet (brand primary) */
+  --accent:       #6d28d9;
+  --accent-bg:    rgba(109,40,217,0.12);
+  --accent-muted: rgba(109,40,217,0.20);
+  --accent-hover: #5b21b6;
+  --accent-bright: #7c3aed;
+
+  /* Secondary accent (gradients, highlights) */
+  --accent-2: #a855f7;
+
+  /* Semantic */
+  --info:       #3b82f6;
+  --info-bg:    rgba(59,130,246,0.10);
+  --warning:    #f0b90b;
+  --warning-bg: rgba(240,185,11,0.10);
+  --error:      var(--short);
+  --error-bg:   var(--short-bg);
+  --success:    var(--long);
+  --success-bg: var(--long-bg);
+  --purple:    #8b5cf6;
+  --purple-bg: rgba(139,92,246,0.10);
+  --muted:     var(--text-2);
+
+  /* Contrast text (on colored backgrounds) */
+  --on-accent: #ffffff;
+  --on-short:  #ffffff;
+
+  /* Overlay */
+  --overlay: rgba(0,0,0,0.65);
+
+  /* RGB decomposed (for rgba() usage) */
+  --long-rgb:    16, 185, 129;
+  --short-rgb:   239, 68, 68;
+  --accent-rgb:  109, 40, 217;
+  --info-rgb:    59, 130, 246;
+  --warning-rgb: 240, 185, 11;
+  --purple-rgb:  139, 92, 246;
+
+  /* Chart */
+  --chart-up:          var(--long);
+  --chart-up-wick:     var(--long-hover);
+  --chart-down:        var(--short);
+  --chart-down-wick:   var(--short-hover);
+  --chart-volume-up:   var(--long-bg);
+  --chart-volume-down: var(--short-bg);
+  --chart-grid:        var(--border-0);
+  --chart-crosshair:   var(--text-3);
+  --chart-ma-7:   #f0b90b;
+  --chart-ma-25:  #8b5cf6;
+  --chart-ma-99:  #3b82f6;
+
+  /* Financial state */
+  --margin-safe:      var(--long);
+  --margin-safe-bg:   var(--long-bg);
+  --margin-warn:      var(--warning);
+  --margin-warn-bg:   var(--warning-bg);
+  --margin-danger:    var(--short);
+  --margin-danger-bg: var(--short-bg);
+
+  --pnl-positive: var(--long);
+  --pnl-negative: var(--short);
+  --pnl-neutral:  var(--text-2);
+
+  --funding-positive: var(--long);
+  --funding-negative: var(--short);
+
+  --liquidation-warn:   var(--warning);
+  --liquidation-danger: var(--short);
+
+  /* Order status */
+  --status-new:          var(--info);
+  --status-new-bg:       var(--info-bg);
+  --status-partial:      var(--warning);
+  --status-partial-bg:   var(--warning-bg);
+  --status-filled:       var(--long);
+  --status-filled-bg:    var(--long-bg);
+  --status-cancelled:    var(--text-3);
+  --status-cancelled-bg: rgba(82,82,91,0.10);
+  --status-rejected:     var(--short);
+  --status-rejected-bg:  var(--short-bg);
+
+  /* VIP / Tier */
+  --tier-bronze:   #cd7f32;
+  --tier-silver:   #c0c0c0;
+  --tier-gold:     #ffd700;
+  --tier-platinum: #e5e4e2;
+  --tier-diamond:  #b9f2ff;
+
+  /* Network */
+  --network-mainnet: var(--long);
+  --network-testnet: var(--warning);
+
+  /* Backward-compatible aliases */
+  --bg-primary:   var(--bg-1);
+  --bg-secondary: var(--bg-2);
+  --bg-tertiary:  var(--bg-3);
+  --bg-hover:     var(--bg-4);
+  --border:        var(--border-1);
+  --border-bright: var(--border-2);
+  --text-primary:   var(--text-0);
+  --text-secondary: var(--text-1);
+  --text-muted:     var(--text-2);
+  --buy:        var(--long);
+  --buy-dim:    var(--long-bg);
+  --buy-hover:  var(--long-hover);
+  --sell:       var(--short);
+  --sell-dim:   var(--short-bg);
+  --sell-hover: var(--short-hover);
+  --accent-dim: var(--accent-bg);
+  --color-buy:      var(--long);
+  --color-sell:     var(--short);
+  --color-buy-rgb:  16, 185, 129;
+  --color-sell-rgb: 239, 68, 68;
+}

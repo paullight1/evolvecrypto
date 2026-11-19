@@ -1,0 +1,39 @@
+{
+  "name": "Exchange — Crypto Trading Platform",
+  "short_name": "Exchange",
+  "description": "Trade crypto with advanced tools",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0e11",
+  "theme_color": "#0b0e11",
+  "orientation": "any",
+  "categories": ["finance", "business"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Trade",
+      "url": "/?page=trade",
+      "description": "Open trading terminal"
+    },
+    {
+      "name": "Portfolio",
+      "url": "/?page=portfolio",
+      "description": "View portfolio"
+    },
+    {
+      "name": "Markets",
+      "url": "/?page=markets",
+      "description": "Browse markets"
+    }
+  ]
+}

@@ -4,9 +4,10 @@ const API_BASE_URL = process.env.API_GATEWAY_URL || "http://localhost:8080";
 
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const formData = await request.formData();
         const file = formData.get('file') as File;
         
@@ -22,7 +23,7 @@ export async function POST(
         backendFormData.append('file', file);
 
         const cookieHeader = request.headers.get("cookie") || "";
-        const response = await fetch(`${API_BASE_URL}/disputes/${params.id}/evidence`, {
+        const response = await fetch(`${API_BASE_URL}/disputes/${encodeURIComponent(id)}/evidence`, {
             method: "POST",
             headers: {
                 cookie: cookieHeader,

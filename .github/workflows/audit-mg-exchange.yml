@@ -1,0 +1,18 @@
+name: Audit MG Exchange
+on:
+  push:
+    branches: ['audit/mg-exchange-p0']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    defaults:
+      run:
+        working-directory: projects/mg-exchange
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo test --workspace --locked

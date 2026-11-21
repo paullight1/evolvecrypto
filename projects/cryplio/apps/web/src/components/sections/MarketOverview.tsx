@@ -10,51 +10,6 @@ import { MarketplaceService, AdResponse } from "@/services/marketplaceService";
 import { TradeService } from "@/services/tradeService";
 import { useAuth } from "@/context/AuthContext";
 
-const p2pAds = [
-    // USD - BUY
-    { user: "FlashExchange", trades: "850+", rating: "99%", price: "1.02", currency: "USD", coin: "USDT", limits: "10 - 2,000", methods: ["PayPal", "Zelle"], type: "buy", time: "5 min", available: "12,000.00" },
-    { user: "QuickCrypto_US", trades: "1,200+", rating: "98.5%", price: "1.01", currency: "USD", coin: "USDT", limits: "100 - 5,000", methods: ["Bank Transfer", "Cash App"], type: "buy", time: "10 min", available: "25,000.00" },
-    { user: "EliteTrader_NY", trades: "5,400+", rating: "99.9%", price: "1.03", currency: "USD", coin: "USDC", limits: "500 - 10,000", methods: ["Bank Transfer", "Zelle"], type: "buy", time: "8 min", available: "50,000.00" },
-    { user: "EasyBuy_Crypto", trades: "320+", rating: "97%", price: "1.05", currency: "USD", coin: "USDC", limits: "20 - 1,000", methods: ["Venmo", "PayPal"], type: "buy", time: "15 min", available: "50,000.00" },
-    { user: "CryptoWhale_X", trades: "15k+", rating: "99.1%", price: "1.00", currency: "USD", coin: "USDT", limits: "1,000 - 50,000", methods: ["WebMoney", "Advcash"], type: "buy", time: "12 min", available: "100,000.00" },
-    { user: "ZenTrader", trades: "2,100+", rating: "99.5%", price: "1.02", currency: "USD", coin: "USDT", limits: "50 - 3,000", methods: ["Zelle", "Bank Transfer"], type: "buy", time: "7 min", available: "15,000.00" },
-    { user: "TitanLiquidity", trades: "8,900+", rating: "100%", price: "1.02", currency: "USD", coin: "USDT", limits: "200 - 15,000", methods: ["Bank Transfer"], type: "buy", time: "4 min", available: "80,000.00" },
-    { user: "AlphaAssets", trades: "1,500+", rating: "99%", price: "1.01", currency: "USD", coin: "USDT", limits: "100 - 10,000", methods: ["Bank Transfer"], type: "buy", time: "3 min", available: "45,000.00" },
-    { user: "BetaExchange", trades: "750+", rating: "98%", price: "1.03", currency: "USD", coin: "USDT", limits: "10 - 500", methods: ["PayPal"], type: "buy", time: "15 min", available: "2,500.00" },
-    { user: "GammaTrade", trades: "4,200+", rating: "99.8%", price: "1.02", currency: "USD", coin: "USDT", limits: "500 - 20,000", methods: ["Zelle"], type: "buy", time: "2 min", available: "60,000.00" },
-
-    // USD - SELL
-    { user: "FastCash_US", trades: "1,100+", rating: "98%", price: "1.00", currency: "USD", coin: "USDT", limits: "50 - 2,000", methods: ["Zelle", "PayPal"], type: "sell", time: "10 min", available: "8,000.00" },
-    { user: "SecureOut_X", trades: "2,300+", rating: "99.2%", price: "0.99", currency: "USD", coin: "USDT", limits: "100 - 5,000", methods: ["Bank Transfer"], type: "sell", time: "15 min", available: "20,000.00" },
-
-    // NGN - BUY
-    { user: "CryptoKing_99", trades: "1,200+", rating: "98%", price: "1,550", currency: "NGN", coin: "USDC", limits: "50,000 - 500,000", methods: ["Bank Transfer", "Kuda"], type: "buy", time: "15 min", available: "45,000.00" },
-    { user: "NaijaTrader_Pro", trades: "3,500+", rating: "99.5%", price: "1,550", currency: "NGN", coin: "USDT", limits: "100,000 - 5M", methods: ["Bank Transfer", "Opay"], type: "buy", time: "10 min", available: "15,000.00" },
-    { user: "KudaExpert", trades: "900+", rating: "97.8%", price: "1,560", currency: "NGN", coin: "USDT", limits: "10,000 - 200,000", methods: ["Kuda", "PalmPay"], type: "buy", time: "5 min", available: "2,000.00" },
-    { user: "LagosWhale", trades: "12k+", rating: "99.9%", price: "1,540", currency: "NGN", coin: "USDT", limits: "500,000 - 20M", methods: ["Bank Transfer"], type: "buy", time: "20 min", available: "50,000.00" },
-    { user: "SwiftNaira", trades: "1,500+", rating: "98.2%", price: "1,555", currency: "NGN", coin: "USDT", limits: "20,000 - 1M", methods: ["Opay", "Kuda"], type: "buy", time: "8 min", available: "6,500.00" },
-    { user: "OpayMaster", trades: "2,800+", rating: "99%", price: "1,552", currency: "NGN", coin: "USDT", limits: "50,000 - 2M", methods: ["Opay", "Bank Transfer"], type: "buy", time: "12 min", available: "10,000.00" },
-    { user: "EasySwap_NG", trades: "450+", rating: "96.5%", price: "1,565", currency: "NGN", coin: "USDT", limits: "5,000 - 50,000", methods: ["PalmPay"], type: "buy", time: "15 min", available: "1,500.00" },
-    { user: "NairaLiquidity", trades: "6,700+", rating: "99.7%", price: "1,548", currency: "NGN", coin: "USDT", limits: "200,000 - 10M", methods: ["Bank Transfer"], type: "buy", time: "10 min", available: "30,000.00" },
-
-    // NGN - SELL
-    { user: "SecureTrader", trades: "3,500+", rating: "100%", price: "1,520", currency: "NGN", coin: "USDT", limits: "100,000 - 5M", methods: ["Bank Transfer"], type: "sell", time: "20 min", available: "45,000" },
-    { user: "NairaOut_Fast", trades: "1,200+", rating: "98.5%", price: "1,515", currency: "NGN", coin: "USDT", limits: "50,000 - 2M", methods: ["Bank Transfer", "Kuda"], type: "sell", time: "15 min", available: "12,000" },
-
-    // PKR - BUY
-    { user: "GlobalNode", trades: "12k+", rating: "99.8%", price: "285", currency: "PKR", coin: "USDT", limits: "5,000 - 100,000", methods: ["Nayapay", "Easypaisa"], type: "buy", time: "10 min", available: "890.00" },
-    { user: "PakCrypto_Hub", trades: "2,100+", rating: "99%", price: "286", currency: "PKR", coin: "USDT", limits: "10,000 - 500,000", methods: ["Bank Transfer", "Sadapay"], type: "buy", time: "12 min", available: "2,500.00" },
-    { user: "EasyTrade_PK", trades: "4,500+", rating: "98.2%", price: "287", currency: "PKR", coin: "USDT", limits: "2,000 - 50,000", methods: ["Easypaisa", "JazzCash"], type: "buy", time: "5 min", available: "1,200.00" },
-    { user: "NayaTrader", trades: "1,800+", rating: "99.5%", price: "285.5", currency: "PKR", coin: "USDT", limits: "5,000 - 200,000", methods: ["Nayapay", "Bank Transfer"], type: "buy", time: "8 min", available: "3,000.00" },
-    { user: "DesiExchange", trades: "950+", rating: "97.5%", price: "288", currency: "PKR", coin: "USDT", limits: "1,000 - 20,000", methods: ["JazzCash", "Easypaisa"], type: "buy", time: "10 min", available: "500.00" },
-    { user: "IndusLiquidity", trades: "7,200+", rating: "99.9%", price: "284.5", currency: "PKR", coin: "USDT", limits: "50,000 - 1M", methods: ["Bank Transfer"], type: "buy", time: "15 min", available: "10,000.00" },
-
-    // EUR - BUY
-    { user: "EuroCrypto_X", trades: "3,400+", rating: "99.2%", price: "0.94", currency: "EUR", coin: "USDT", limits: "100 - 5,000", methods: ["SEPA", "Revolut"], type: "buy", time: "12 min", available: "15,000.00" },
-    { user: "BerlinTrader", trades: "1,200+", rating: "98.5%", price: "0.95", currency: "EUR", coin: "USDT", limits: "50 - 2,000", methods: ["Revolut", "Wise"], type: "buy", time: "5 min", available: "5,000.00" },
-    { user: "ParisLiquidity", trades: "8,500+", rating: "100%", price: "0.93", currency: "EUR", coin: "USDT", limits: "500 - 20,000", methods: ["SEPA Instant"], type: "buy", time: "4 min", available: "40,000.00" },
-];
-
 interface MarketOverviewProps {
     hideViewAll?: boolean;
 }
@@ -89,58 +44,11 @@ const MarketOverview = ({ hideViewAll = false }: MarketOverviewProps) => {
                     type: activeTab,
                 } as any);
 
-                if (!data || !data.ads || data.ads.length === 0) {
-                    const mockMapped: AdResponse[] = p2pAds
-                        .filter(ad => ad.type === activeTab && ad.currency === selectedFiat && ad.coin === selectedCoin)
-                        .map((ad, idx) => ({
-                            ad_id: `mock-${idx}`,
-                            user_id: `user-${ad.user}`,
-                            username: ad.user,
-                            user_trades: parseInt(ad.trades.replace(/\D/g, "")),
-                            user_rating: parseFloat(ad.rating.replace("%", "")),
-                            type: ad.type as "buy" | "sell",
-                            crypto_symbol: ad.coin,
-                            fiat_symbol: ad.currency,
-                            price: parseFloat(ad.price.replace(/,/g, "")),
-                            min_amount: parseFloat(ad.limits.split("-")[0].replace(/,/g, "")),
-                            max_amount: parseFloat(ad.limits.split("-")[1].replace(/,/g, "")),
-                            payment_methods: ad.methods,
-                            payment_method_ids: ad.methods.map((_, i) => i + 1), // Dummy IDs for mock
-                            payment_window_minutes: parseInt(ad.time.split(" ")[0]),
-                            is_online: true,
-                            price_type: "fixed",
-                            status: "active",
-                            created_at: new Date().toISOString()
-                        }));
-                    setAds(mockMapped);
-                } else {
-                    setAds(data.ads);
-                }
+                // Never present fabricated counterparties, prices or liquidity as live offers.
+                setAds(data?.ads ?? []);
             } catch (error) {
-                // Fallen back to mock data if API is temporarily unavailable
-                const mockMapped: AdResponse[] = p2pAds
-                    .filter(ad => ad.type === activeTab && ad.currency === selectedFiat && ad.coin === selectedCoin)
-                    .map((ad, idx) => ({
-                        ad_id: `mock-${idx}`,
-                        user_id: `user-${ad.user}`,
-                        username: ad.user,
-                        user_trades: parseInt(ad.trades.replace(/\D/g, "")),
-                        user_rating: parseFloat(ad.rating.replace("%", "")),
-                        type: ad.type as "buy" | "sell",
-                        crypto_symbol: ad.coin,
-                        fiat_symbol: ad.currency,
-                        price: parseFloat(ad.price.replace(/,/g, "")),
-                        min_amount: parseFloat(ad.limits.split("-")[0].replace(/,/g, "")),
-                        max_amount: parseFloat(ad.limits.split("-")[1].replace(/,/g, "")),
-                        payment_methods: ad.methods,
-                        payment_method_ids: ad.methods.map((_, i) => i + 1), // Dummy IDs for mock
-                        payment_window_minutes: parseInt(ad.time.split(" ")[0]),
-                        is_online: true,
-                        price_type: "fixed",
-                        status: "active",
-                        created_at: new Date().toISOString()
-                    }));
-                setAds(mockMapped);
+                console.error("Unable to load live marketplace offers:", error);
+                setAds([]);
             } finally {
                 setIsLoading(false);
             }
